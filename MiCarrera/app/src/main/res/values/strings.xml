@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MiCarrera</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Lucas Galeano</string>
+    <string name="nav_header_subtitle">Legajo: 160-009-6</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_search">Search</string>
+</resources>
