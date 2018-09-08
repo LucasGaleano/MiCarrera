@@ -11,15 +11,21 @@ public class Repository {
 
     private Dao mDao;
     private LiveData<List<Subject>> mSubject;
+    private LiveData<List<Exam>> mExam;
 
     public Repository(Application application) {
         RoomDatabase db = RoomDatabase.getDatabase(application);
         mDao = db.Dao();
         mSubject = mDao.getAllSubjects();
+        mExam = mDao.getAllExam();
     }
 
     public LiveData<List<Subject>> getAllSubjects() {
         return mSubject;
+    }
+
+    public LiveData<List<Exam>> getAllExam() {
+        return mExam;
     }
 
     public List<String> getPredecessorByName(String subjectName) {

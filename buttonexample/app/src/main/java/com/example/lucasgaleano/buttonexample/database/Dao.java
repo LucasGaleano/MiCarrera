@@ -19,6 +19,9 @@ public interface Dao {
     @Query("SELECT predecessor FROM predecessor_table WHERE predecessor_table.subject_name=:subjectName")
     List<String> getPredecessorByName(String subjectName);
 
+    @Query("SELECT * FROM exam_table")
+    LiveData<List<Exam>> getAllExam();
+
     @Query("DELETE FROM subject_table")
     void deleteAllSubject();
 
@@ -32,7 +35,10 @@ public interface Dao {
     void update(String name, int state);
 
     @Insert
-    void insert(Subject... subject);
+    void insert(Exam... exams);
+
+    @Insert
+    void insert(Subject... subjects);
 
     @Insert
     void insert(SubjectPredecessor... predecessors);

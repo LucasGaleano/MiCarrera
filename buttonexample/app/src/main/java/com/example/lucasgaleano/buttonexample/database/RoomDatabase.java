@@ -9,7 +9,8 @@ import android.support.annotation.NonNull;
 
 import com.example.lucasgaleano.buttonexample.R;
 
-@Database(entities = {Subject.class, SubjectPredecessor.class}, version = 1)
+@Database(entities = {Subject.class, SubjectPredecessor.class,
+                        Exam.class}, version = 1)
 public abstract class RoomDatabase extends android.arch.persistence.room.RoomDatabase {
     public abstract Dao Dao();
 
