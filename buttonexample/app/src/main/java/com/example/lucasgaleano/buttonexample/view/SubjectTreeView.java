@@ -1,7 +1,6 @@
 package com.example.lucasgaleano.buttonexample.view;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -12,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lucasgaleano.buttonexample.R;
-import com.example.lucasgaleano.buttonexample.database.Subject;
 
 import java.util.List;
 
 public class SubjectTreeView extends ViewGroup {
 
-
+    private final String TAG = "Treeview";
     Paint mPaint;
+    private Context context;
     private int mWidth;
     private int mHeight;
     private int mHeightPosition;
@@ -29,23 +28,30 @@ public class SubjectTreeView extends ViewGroup {
     private int colorHabilitada;
     private int colorInhabilitada;
     private int colorCursada;
+    private int colorCursando;
+    private int colorAprobada;
+
+    private OnClickListener onClick;
 
     public SubjectTreeView(Context context) {
-        super(context,null,0);
+        super(context, null, 0);
+        this.context = context;
     }
 
     public SubjectTreeView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs,0);
+        super(context, attrs, 0);
+        this.context = context;
         init(attrs);
     }
 
     public SubjectTreeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
         init(attrs);
 
     }
 
-    private void init(@Nullable AttributeSet set){
+    private void init(@Nullable AttributeSet set) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(4);
         mPaint.setStyle(Paint.Style.STROKE);
@@ -53,10 +59,12 @@ public class SubjectTreeView extends ViewGroup {
         colorHabilitada = getResources().getColor(R.color.colorHabilitada);
         colorInhabilitada = getResources().getColor(R.color.colorInhabilitada);
         colorCursada = getResources().getColor(R.color.colorCursada);
+        colorCursando = getResources().getColor(R.color.colorCursando);
+        colorAprobada = getResources().getColor(R.color.colorAprobada);
 
         mPaint.setColor(colorInhabilitada);
 
-        if(set == null){
+        if (set == null) {
             return;
         }
 
@@ -65,7 +73,6 @@ public class SubjectTreeView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean b, int i, int i1, int i2, int i3) {
-
         positionNodesTree();
     }
 
@@ -75,6 +82,7 @@ public class SubjectTreeView extends ViewGroup {
 
         int mCountChild = getChildCount();
         for (int index = 0; index < mCountChild; index++) {
+            Log.d(TAG,"on measure childs: " + String.valueOf(mCountChild));
             View mChildView = getChildAt(index);
             measureChild(mChildView, widthMeasureSpec, heightMeasureSpec);
             Log.d("child width: ", String.valueOf(mChildView.getMeasuredWidth()));
@@ -84,17 +92,17 @@ public class SubjectTreeView extends ViewGroup {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        // Calculate the radius from the width and height.
         mWidth = w;
         mHeight = h;
-        mHeightPosition = h / positions ;
+        mHeightPosition = h / positions;
     }
 
     public void addNode(String name, int level, int position, int state, List<String> predecessors) {
 
-        this.positions = Math.max(this.positions,position);
-        SubjectView aux = new SubjectView( getContext(),name,level, position, predecessors);
+        this.positions = Math.max(this.positions, position);
+        SubjectView aux = new SubjectView(context, name, level, position, predecessors);
         aux.setState(state);
+        aux.setOnClickListener(this.onClick);
         this.addView(aux);
     }
 
@@ -102,30 +110,30 @@ public class SubjectTreeView extends ViewGroup {
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
 
+
         int mCountChild = getChildCount();
-
-
+        Log.d(TAG,"on dispatch draw childs: " + String.valueOf(mCountChild));
 
         for (int index = 0; index < mCountChild; index++) {
             SubjectView subject = (SubjectView) getChildAt(index);
             drawEdgeToPredeccessors(canvas, subject);
         }
-        Log.d("Node: ","------------------------------");
+        Log.d("Node: ", "------------------------------");
     }
 
     private void drawEdgeToPredeccessors(Canvas canvas, SubjectView subject) {
 
         for (String predecessorName : subject.getPredecessor()) {
 
-           SubjectView predecessorView = getSubjectViewFromName(predecessorName);
+            SubjectView predecessorView = getSubjectViewFromName(predecessorName);
             if (predecessorView == null) continue;
-            drawCurveViewToView(canvas,predecessorView,subject);
+            drawCurveViewToView(canvas, predecessorView, subject);
 
         }
 
     }
 
-    private void drawCurveViewToView(Canvas canvas, SubjectView predecessorView, SubjectView subject){
+    private void drawCurveViewToView(Canvas canvas, SubjectView predecessorView, SubjectView subject) {
 
         int xTo = subject.getLeft();
         int yTo = subject.getTop() + (subject.getMeasuredHeight() / 2);
@@ -135,28 +143,33 @@ public class SubjectTreeView extends ViewGroup {
         int xFrom = predecessorView.getRight();
         int yFrom = predecessorView.getTop() + (predecessorView.getMeasuredHeight() / 2);
         int distanceXBeetwenNodes = xFrom - xTo;
-        int distanceYBeetwenNodes = yFrom - yTo;
-        path.moveTo(xTo , yTo );
-        path.cubicTo(xTo + distanceXBeetwenNodes/2, yTo, xTo + distanceXBeetwenNodes / 2, yFrom, xFrom, yFrom);
-        if(mPaint.getColor() == getResources().getColor(R.color.colorHabilitada))
-            Log.d("Node: ", predecessorView.getText().toString() +" "+ subject.getText().toString());
-        Log.d("node: ", subject.getText().toString() +" "+ predecessorView.getText().toString());
+        //int distanceYBeetwenNodes = yFrom - yTo;
+        path.moveTo(xTo, yTo);
+        path.cubicTo(xTo + distanceXBeetwenNodes / 2, yTo, xTo + distanceXBeetwenNodes / 2, yFrom, xFrom, yFrom);
+        Log.d("node: ", subject.getText().toString() + " " + predecessorView.getText().toString());
         canvas.drawPath(path, mPaint);
 
     }
 
     private int getColorFromStateSubject(SubjectView predecessorView) {
 
-        if(predecessorView.getState() == SubjectView.HABILITADA)
-           return colorHabilitada;
+        if (predecessorView.getState() == getResources().getInteger(R.integer.HABILITADA))
+            return colorHabilitada;
 
-        if(predecessorView.getState() == SubjectView.INHABILIDATADA)
+        if (predecessorView.getState() == getResources().getInteger(R.integer.INHABILITADA))
             return colorInhabilitada;
 
-        if(predecessorView.getState() == SubjectView.CURSADA)
+        if (predecessorView.getState() == getResources().getInteger(R.integer.CURSANDO))
+            return colorCursando;
+
+        if (predecessorView.getState() == getResources().getInteger(R.integer.CURSADA))
             return colorCursada;
 
-        return colorCursada; //TODO cambiar a color por defecto
+        if (predecessorView.getState() == getResources().getInteger(R.integer.APROBADA))
+            return colorAprobada;
+
+        Log.d(TAG,"se eligio color por defecto");
+        return colorInhabilitada;
     }
 
     private SubjectView getSubjectViewFromName(String subjectName) {
@@ -173,6 +186,7 @@ public class SubjectTreeView extends ViewGroup {
 
     private void positionNodesTree() {
 
+        mHeightPosition = mHeight / positions;
         int mCountChild = getChildCount();
         maxWidthNode = maxWidthNode();
 
@@ -180,7 +194,7 @@ public class SubjectTreeView extends ViewGroup {
             SubjectView mChildView = (SubjectView) getChildAt(index);
 
             int position = mHeightPosition * mChildView.getPosition();
-            position = position - (mHeightPosition-mChildView.getMeasuredHeight()/2);
+            position = position - (mHeightPosition - mChildView.getMeasuredHeight() / 2);
             int childH = mChildView.getMeasuredHeight();
             int childW = mChildView.getMeasuredWidth();
             int childStartPos = (maxWidthNode + spaceBetweenNodes) * (mChildView.getLevel() - 1);
@@ -215,31 +229,25 @@ public class SubjectTreeView extends ViewGroup {
 
 
     public void setOnClicks(OnClickListener onClicks) {
-
-        int mCountChild = getChildCount();
-        for (int index = 0; index < mCountChild; index++) {
-            SubjectView subject = (SubjectView) getChildAt(index);
-            subject.setOnClickListener(onClicks);
-        }
+        this.onClick = onClicks;
     }
 
 
     public void doInvalidate() {
+        Log.d(TAG,"invalidate");
         invalidate();
     }
 
-    public void updateNode(String name, int state) {
+    public void updateNode(String name, int level, int position, int state, List<String> predecessors) {
 
-        int mCountChild = getChildCount();
-        for (int index = 0; index < mCountChild; index++) {
-            SubjectView sub = getSubjectViewFromName(name);
-            if (name.equals(sub.getText())){
-                sub.setState(state);
-                continue;
-            }
-
+        SubjectView sub = getSubjectViewFromName(name);
+        if (sub != null) {   //node exist
+            sub.setState(state);
+            //sub.setLevel(level);
+            //sub.setPosition(position);
+        } else {
+            this.addNode(name, level, position, state, predecessors);
         }
-
 
     }
 }

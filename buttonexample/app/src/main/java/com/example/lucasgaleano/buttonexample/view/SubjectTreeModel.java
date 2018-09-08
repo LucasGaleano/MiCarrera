@@ -4,10 +4,12 @@ import android.app.Application;
 import android.app.DownloadManager;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.example.lucasgaleano.buttonexample.database.Dao;
+import com.example.lucasgaleano.buttonexample.database.Repository;
 import com.example.lucasgaleano.buttonexample.database.RoomDatabase;
 import com.example.lucasgaleano.buttonexample.database.Subject;
 
@@ -18,19 +20,33 @@ import java.util.List;
 public class SubjectTreeModel extends AndroidViewModel {
 
 
-    private final Dao dao;
+    private final Repository mRepository;
     private LiveData<List<Subject>> subjects;
 
 
     public SubjectTreeModel(@NonNull Application application) {
         super(application);
-        RoomDatabase db = RoomDatabase.getDatabase(application);
-        dao = db.Dao();
-        subjects = dao.getAllSubjects();
+        mRepository = new Repository(application);
+        subjects = mRepository.getAllSubjects();
     }
 
-//    public void makeIngSystemTree() {
-//
+    public LiveData<List<Subject>> getSubjects() {
+        return subjects;
+    }
+
+    public List<String> getPredecessor(String subjectName){
+        return mRepository.getPredecessorByName(subjectName);
+    }
+
+    public void updateSubject(String name, int level, int position, int state){
+        mRepository.updateSubject(new Subject(name,state,level,position));
+    }
+
+    public void updateSubject(String name,int state){
+        mRepository.updateSubject(new Subject(name,state,0,0));
+    }
+
+    //    public void makeIngSystemTree() {
 //
 //        //LEVEL 1
 //        subjects.add(new SubjectView( getApplication().getBaseContext(),"Fisica I", 1, 1, null));
@@ -81,16 +97,4 @@ public class SubjectTreeModel extends AndroidViewModel {
 //
 //    }
 
-    public LiveData<List<Subject>> getSubjects() {
-        return subjects;
-    }
-
-    public LiveData<List<String>> getPredecessor(String subjectName){
-        return dao.getAllPredecessor(subjectName);
-    }
-
-    public void updateView(SubjectView subv) {
-        Subject sub = new Subject(subv.getText().toString(),subv.getState(),subv.getLevel(),subv.getPosition());
-        dao.update(sub);
-    }
 }

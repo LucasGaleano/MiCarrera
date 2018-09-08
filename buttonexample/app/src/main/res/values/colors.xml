@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorInhabilitada">#FF3D00</color>
-    <color name="colorHabilitada">#76FF03</color>
-    <color name="colorCursada">#64DD17</color>
+    <color name="colorHabilitada">#00d0ff</color>
+    <color name="colorCursando">#ffa200</color>
+    <color name="colorCursada">#890fede2</color>
+    <color name="colorAprobada">#76FF03</color>
 </resources>

@@ -16,17 +16,26 @@ public interface Dao {
     @Query("SELECT * from subject_table")
     LiveData<List<Subject>> getAllSubjects();
 
-    @Query("SELECT name FROM subjectpredecessor INNER JOIN subject_table " + "ON subjectpredecessor.subject_name=:subjectName")
-    LiveData<List<String>> getAllPredecessor(String subjectName);
+    @Query("SELECT predecessor FROM predecessor_table WHERE predecessor_table.subject_name=:subjectName")
+    List<String> getPredecessorByName(String subjectName);
 
     @Query("DELETE FROM subject_table")
-    void deleteAll();
+    void deleteAllSubject();
+
+    @Query("DELETE FROM Predecessor_table")
+    void deleteAllPredecessor();
 
     @Update
     void update(Subject... subject);
 
+    @Query("UPDATE Subject_table SET state=:state WHERE name=:name ")
+    void update(String name, int state);
+
     @Insert
     void insert(Subject... subject);
+
+    @Insert
+    void insert(SubjectPredecessor... predecessors);
 
 }
 
