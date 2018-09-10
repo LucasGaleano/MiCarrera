@@ -5,13 +5,14 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_calendar"
-            android:icon="@android:drawable/ic_menu_my_calendar"
-            android:title="Calendar" />
+            android:id="@+id/nav_materias"
+            android:icon="@drawable/ic_menu_flower"
+            android:title="@string/Materias" />
+
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Tps and works" />
+            android:id="@+id/nav_Tareas"
+            android:icon="@drawable/ic_menu_tareas"
+            android:title="@string/Tareas" />
     </group>
 
     <item android:title="Communicate">
@@ -26,13 +27,5 @@
                 android:title="Send" />
         </menu>
     </item>
-
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Import" />
-/>
-    </group>
 
 </menu>
