@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="INHABILITADA">0</integer>
+    <integer name="HABILITADA">1 </integer>
+    <integer name="CURSANDO">2</integer>
+    <integer name="CURSADA">3</integer>
+    <integer name="APROBADA">4</integer>
+</resources>
