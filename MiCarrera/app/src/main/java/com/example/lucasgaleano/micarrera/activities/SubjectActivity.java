@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -58,7 +60,7 @@ public class SubjectActivity extends Activity {
             }
         });
 
-/*
+
         LM = findViewById(R.id.ListaM);
         LM.setHeader("Parciales");
         LM.addItem("Item");
@@ -66,7 +68,7 @@ public class SubjectActivity extends Activity {
         LM2 = findViewById(R.id.ListaM2);
         LM2.setHeader("Profesores:");
         LM2.addItem("Item");
-/*
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -82,7 +84,7 @@ public class SubjectActivity extends Activity {
             public void onClick(View view) {
                 LM2.addItem("Foto");
             }
-        });*/
+        });
 
     }
 }
