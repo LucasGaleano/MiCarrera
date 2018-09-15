@@ -1,5 +1,6 @@
 package com.example.lucasgaleano.micarrera.activities;
 
+import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -35,11 +36,14 @@ public class TreeActivity extends AppCompatActivity
     public static final String EXTRA_NAME_SUBJECT = "com.example.lucasgaleano.micarrera.extra.NAME_SUBJECT";
     public static final String EXTRA_STATE_SUBJECT = "com.example.lucasgaleano.micarrera.extra.STATE_SUBJECT";
     private Intent intentSubjectActivity;
+    private TreeActivity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tree);
+
+        activity = this;
 
         initNavigationAndToolbar();
 
@@ -74,7 +78,6 @@ public class TreeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-
     View.OnClickListener clicks = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -92,7 +95,7 @@ public class TreeActivity extends AppCompatActivity
                 dialog.setArguments(args);
                 dialog.show(getSupportFragmentManager(),"Choose");
             }else{
-                startActivity(intentSubjectActivity);
+                startActivity(intentSubjectActivity, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
             }
 
 

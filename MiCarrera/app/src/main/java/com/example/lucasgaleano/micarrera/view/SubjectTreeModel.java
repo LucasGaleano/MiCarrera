@@ -4,9 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
-import android.view.View;
-
-import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
 
