@@ -242,7 +242,6 @@ public class SubjectTreeView extends ViewGroup {
 
     public void updateNode(String name, int level, int position, int state, List<String> predecessors) {
 
-
         SubjectView sub = getSubjectViewFromName(name);
 
         if (sub != null) { // node exist
@@ -256,8 +255,9 @@ public class SubjectTreeView extends ViewGroup {
     private void updateStatusNode(SubjectView sub, int state, List<String> predecessors){
         if (state == getResources().getInteger(R.integer.INHABILITADA) && allPredecessorDone(predecessors)) {
             state = getResources().getInteger(R.integer.HABILITADA);
-            sub.setOnClickListener(this.onClick);
         }
+        if(state != getResources().getInteger(R.integer.INHABILITADA))
+            sub.setOnClickListener(onClick);
         sub.setState(state);
     }
 
