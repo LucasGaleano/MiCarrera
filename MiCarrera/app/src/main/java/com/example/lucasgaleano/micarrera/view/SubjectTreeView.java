@@ -1,6 +1,5 @@
 package com.example.lucasgaleano.micarrera.view;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -10,10 +9,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.lucasgaleano.micarrera.R;
-import com.example.lucasgaleano.micarrera.activities.TreeActivity;
-
 import java.util.List;
 
 public class SubjectTreeView extends ViewGroup {
@@ -106,9 +102,10 @@ public class SubjectTreeView extends ViewGroup {
 
         this.positions = Math.max(this.positions, position);
         SubjectView aux = new SubjectView(context, name, level, position, predecessors);
-        aux.setState(state);
-        aux.setOnClickListener(this.onClick);
+
+        updateStatusNode(aux,state,predecessors);
         this.addView(aux);
+
     }
 
     @Override
@@ -248,16 +245,20 @@ public class SubjectTreeView extends ViewGroup {
 
         SubjectView sub = getSubjectViewFromName(name);
 
-        if(state == getResources().getInteger(R.integer.INHABILITADA) && allPredecessorDone(predecessors)){
-            state = getResources().getInteger(R.integer.HABILITADA);
-        }
-
-        if (sub != null) {   //node exist
-            sub.setState(state);
-        } else {
+        if (sub != null) { // node exist
+            updateStatusNode(sub,state,predecessors);
+        } else { //node not exist
             this.addNode(name, level, position, state, predecessors);
         }
 
+    }
+
+    private void updateStatusNode(SubjectView sub, int state, List<String> predecessors){
+        if (state == getResources().getInteger(R.integer.INHABILITADA) && allPredecessorDone(predecessors)) {
+            state = getResources().getInteger(R.integer.HABILITADA);
+            sub.setOnClickListener(this.onClick);
+        }
+        sub.setState(state);
     }
 
     private boolean allPredecessorDone(List<String> predecessors) {
