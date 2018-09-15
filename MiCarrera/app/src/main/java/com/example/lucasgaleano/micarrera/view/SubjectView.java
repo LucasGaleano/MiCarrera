@@ -18,7 +18,6 @@ public class SubjectView extends android.support.v7.widget.AppCompatTextView {
 
 
 
-
     private void changeBackground(int state) {
         if (state == getResources().getInteger(R.integer.INHABILITADA))
             setBackgroundDrawable(getResources().getDrawable(R.drawable.background_subject_inhabilitada));
