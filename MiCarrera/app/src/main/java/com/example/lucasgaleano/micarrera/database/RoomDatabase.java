@@ -3,14 +3,15 @@ package com.example.lucasgaleano.micarrera.database;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-
-import com.example.lucasgaleano.micarrera.R;
+import java.util.Calendar;
 
 @Database(entities = {Subject.class, SubjectPredecessor.class,
                         Exam.class}, version = 1)
+@TypeConverters({Converters.class})
 public abstract class RoomDatabase extends android.arch.persistence.room.RoomDatabase {
     public abstract Dao Dao();
 
@@ -175,6 +176,10 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
             mDao.insert(new SubjectPredecessor("PF", "IS"));
             mDao.insert(new SubjectPredecessor("PF", "Redes"));
             mDao.insert(new SubjectPredecessor("PF", "Legis"));
+
+            mDao.insert(new Exam("MD", Calendar.getInstance().getTime(),0,6));
+            mDao.insert(new Exam("MD", Calendar.getInstance().getTime(),1,8));
+
         }
     }
 }

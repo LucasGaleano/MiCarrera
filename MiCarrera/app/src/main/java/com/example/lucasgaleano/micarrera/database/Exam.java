@@ -3,6 +3,8 @@ package com.example.lucasgaleano.micarrera.database;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "exam_table")
 public class Exam {
 
@@ -10,10 +12,17 @@ public class Exam {
     private int id_exam;
 
     private String subject;
-    private Long date;
+    private Date date;
     private int type;
     private float score;
 
+    public Exam(String subject, Date date, int type, float score){
+
+        this.subject = subject;
+        this.date = date;
+        this.type = type;
+        this.score = score;
+    }
 
     public int getId_exam() {
         return id_exam;
@@ -31,11 +40,11 @@ public class Exam {
         this.subject = subject;
     }
 
-    public Long getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Long date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
