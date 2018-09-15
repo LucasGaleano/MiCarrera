@@ -74,9 +74,9 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
             mDao.insert(new Subject("AyED", initialState, 1, 6));
             mDao.insert(new Subject("MD", initialState, 1, 7));
             mDao.insert(new Subject("Ingles I", initialState, 1, 8));
-            //mDao.insert(new Subject("Quimica",initialState,1,9));
-            //mDao.insert(new Subject("IyS",initialState,1,10));
-            //mDao.insert(new Subject("SDR",initialState,1,11));
+            mDao.insert(new Subject("Quimica",initialState,1,9));
+            mDao.insert(new Subject("IyS",initialState,1,10));
+            mDao.insert(new Subject("SDR",initialState,1,11));
 
 
             //LEVEL 2

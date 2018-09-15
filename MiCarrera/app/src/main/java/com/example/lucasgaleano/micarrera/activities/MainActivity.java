@@ -1,5 +1,6 @@
 package com.example.lucasgaleano.micarrera.activities;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_materias) {
             Intent intent = new Intent(this,TreeActivity.class);
-            startActivity(intent);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         } else if (id == R.id.nav_Tareas) {
 
         }
