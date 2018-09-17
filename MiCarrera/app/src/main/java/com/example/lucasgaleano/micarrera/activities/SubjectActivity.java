@@ -1,14 +1,19 @@
 package com.example.lucasgaleano.micarrera.activities;
 
-
 import android.arch.lifecycle.Observer;
 
+import android.app.Activity;
+
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -17,11 +22,11 @@ import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
 import com.example.lucasgaleano.micarrera.R;
+import com.example.lucasgaleano.micarrera.view.ListaView;
 
 import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
-
 
     private TextView mtv;
     private Switch mSwitch;
@@ -29,20 +34,22 @@ public class SubjectActivity extends AppCompatActivity {
     private Repository repo;
     private Subject sub;
     private int subjectState;
+    private ListaView LM,LM2;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
 
-        //treeModel = ViewModelProviders.of(this).get(SubjectTreeModel.class);
         repo = new Repository(getApplication());
         Intent intent = getIntent();
         subjectState = intent.getIntExtra(TreeActivity.EXTRA_STATE_SUBJECT,-1);
         subjectName = intent.getStringExtra(TreeActivity.EXTRA_NAME_SUBJECT);
+
         sub = new Subject(subjectName,
                 subjectState,0,0);
-
 
 
         mtv = findViewById(R.id.textView2);
@@ -71,6 +78,29 @@ public class SubjectActivity extends AppCompatActivity {
                     Log.d("examen nota: ", String.valueOf(exam.getScore()));
                     Log.d("examen fecha: ", exam.getDate().toString());
                 }
+
+        LM = findViewById(R.id.ListaM);
+        LM.setHeader("Parciales");
+        LM.addItem("Item");
+
+        LM2 = findViewById(R.id.ListaM2);
+        LM2.setHeader("Profesores:");
+        LM2.addItem("Item");
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onClick(View view) {
+                LM.addItem("Audio");
+            }
+        });
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onClick(View view) {
+                LM2.addItem("Foto");
             }
         });
 
