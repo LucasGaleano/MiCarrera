@@ -1,14 +1,13 @@
 package com.example.lucasgaleano.micarrera.activities;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -47,7 +46,6 @@ public class TreeActivity extends AppCompatActivity
 
         initNavigationAndToolbar();
 
-
         treeModel = ViewModelProviders.of(this).get(SubjectTreeModel.class);
         mSystemTreeView = findViewById(R.id.treeView);
         mSystemTreeView.setOnClicks(clicks);
@@ -79,6 +77,7 @@ public class TreeActivity extends AppCompatActivity
     }
 
     View.OnClickListener clicks = new View.OnClickListener() {
+        @SuppressLint("NewApi")
         @Override
         public void onClick(View v) {
             SubjectView sub = (SubjectView) v;
