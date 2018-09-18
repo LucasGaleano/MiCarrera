@@ -1,5 +1,6 @@
 package com.example.lucasgaleano.micarrera.activities;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 
 import android.app.Activity;
@@ -24,7 +25,9 @@ import com.example.lucasgaleano.micarrera.database.Subject;
 import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class SubjectActivity extends AppCompatActivity {
 
@@ -71,17 +74,22 @@ public class SubjectActivity extends AppCompatActivity {
         });
 
         repo.getAllExam().observe(this, new Observer<List<Exam>>() {
-            @Override
-            public void onChanged(@Nullable final List<Exam> exams) {
-                for (Exam exam : exams) {
-                    Log.d("examen nombre: ", exam.getSubject());
-                    Log.d("examen nota: ", String.valueOf(exam.getScore()));
-                    Log.d("examen fecha: ", exam.getDate().toString());
-                }
+                    @Override
+                    public void onChanged(@Nullable final List<Exam> exams) {
+                        for (Exam exam : exams) {
+                            Log.d("examen nombre: ", exam.getSubject());
+                            Log.d("examen nota: ", String.valueOf(exam.getScore()));
+                            Log.d("examen fecha: ", exam.getDate().getTime().toString());
+                            Calendar cal = exam.getDate();
+                            LM.addItem(Exam.get(exam.getType()) +" "+ formatDate(cal));
+
+                        }
+                    }
+                });
 
         LM = findViewById(R.id.ListaM);
         LM.setHeader("Parciales");
-        LM.addItem("Item");
+
 
         LM2 = findViewById(R.id.ListaM2);
         LM2.setHeader("Profesores:");
@@ -103,6 +111,14 @@ public class SubjectActivity extends AppCompatActivity {
                 LM2.addItem("Foto");
             }
         });
+
+    }
+
+    private String formatDate(Calendar cal) {
+
+        return String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).concat(
+                "/"+ String.valueOf(cal.get(Calendar.MONTH)).concat(
+                        "/"+ String.valueOf(cal.get(Calendar.YEAR))));
 
     }
 }
