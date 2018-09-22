@@ -20,7 +20,10 @@ public interface Dao {
     List<String> getPredecessorByName(String subjectName);
 
     @Query("SELECT * FROM exam_table")
-    LiveData<List<Exam>> getAllExam();
+    LiveData<List<Exam>> getAllExams();
+
+    @Query("SELECT * FROM EXAM_TABLE WHERE exam_table.subject=:subjectName")
+    LiveData<List<Exam>> getExamsBySubject(String subjectName);
 
     @Query("SELECT * FROM subject_table WHERE subject_table.name=:subjectName")
     Subject getSubjectByName(String subjectName);

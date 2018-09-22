@@ -17,7 +17,7 @@ public class Repository {
         RoomDatabase db = RoomDatabase.getDatabase(application);
         mDao = db.Dao();
         mSubject = mDao.getAllSubjects();
-        mExam = mDao.getAllExam();
+        mExam = mDao.getAllExams();
     }
 
     public LiveData<List<Subject>> getAllSubjects() {
@@ -26,6 +26,18 @@ public class Repository {
 
     public LiveData<List<Exam>> getAllExam() {
         return mExam;
+    }
+
+    public LiveData<List<Exam>> getExamsBySubject(String subjectName){
+
+        try {
+            return new getExamsBySubjectAsyncTask(mDao).execute(subjectName).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public List<String> getPredecessorByName(String subjectName) {
@@ -96,6 +108,18 @@ public class Repository {
         protected Subject doInBackground(String... strings) {
             return dao.getSubjectByName(strings[0]);
 
+        }
+    }
+
+    private class getExamsBySubjectAsyncTask  extends AsyncTask<String, Void, LiveData<List<Exam>>> {
+        private Dao dao;
+        public getExamsBySubjectAsyncTask(Dao mDao) {
+            dao = mDao;
+        }
+
+        @Override
+        protected LiveData<List<Exam>> doInBackground(String... strings) {
+            return dao.getExamsBySubject(strings[0]);
         }
     }
 }

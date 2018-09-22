@@ -165,12 +165,12 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
             mDao.insert(new SubjectPredecessor("SG", "Sim"));
             mDao.insert(new SubjectPredecessor("SG", "AdR"));
             mDao.insert(new SubjectPredecessor("IA", "IO"));
+
             mDao.insert(new SubjectPredecessor("IA", "Sim"));
             mDao.insert(new SubjectPredecessor("AG", "AdR"));
             mDao.insert(new SubjectPredecessor("AG", "IO"));
             mDao.insert(new SubjectPredecessor("Redes", "Com"));
             mDao.insert(new SubjectPredecessor("Redes", "SO"));
-
             //Predeccesor LEVEL 6
             mDao.insert(new SubjectPredecessor("PF", "AdR"));
             mDao.insert(new SubjectPredecessor("PF", "IS"));
