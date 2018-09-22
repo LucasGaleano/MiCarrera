@@ -20,24 +20,10 @@ public class Repository {
         mExam = mDao.getAllExams();
     }
 
+    //------Subjects----------------------------------------
+
     public LiveData<List<Subject>> getAllSubjects() {
         return mSubject;
-    }
-
-    public LiveData<List<Exam>> getAllExam() {
-        return mExam;
-    }
-
-    public LiveData<List<Exam>> getExamsBySubject(String subjectName){
-
-        try {
-            return new getExamsBySubjectAsyncTask(mDao).execute(subjectName).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public List<String> getPredecessorByName(String subjectName) {
@@ -53,7 +39,7 @@ public class Repository {
     }
 
     public void updateSubject(Subject subject) {
-        new updateAsyncTask(mDao).execute(subject);
+        new updateSubjectAsyncTask(mDao).execute(subject);
     }
 
     public Subject getSubjectByName(String name) {
@@ -82,11 +68,11 @@ public class Repository {
         }
     }
 
-    private class updateAsyncTask extends AsyncTask<Subject, Void, Void> {
+    private class updateSubjectAsyncTask extends AsyncTask<Subject, Void, Void> {
 
         private Dao dao;
 
-        public updateAsyncTask(Dao mDao) {
+        public updateSubjectAsyncTask(Dao mDao) {
             dao = mDao;
         }
 
@@ -111,6 +97,24 @@ public class Repository {
         }
     }
 
+    //------Exam----------------------------------------
+
+    public LiveData<List<Exam>> getAllExam() {
+        return mExam;
+    }
+
+    public LiveData<List<Exam>> getExamsBySubject(String subjectName){
+
+        try {
+            return new getExamsBySubjectAsyncTask(mDao).execute(subjectName).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private class getExamsBySubjectAsyncTask  extends AsyncTask<String, Void, LiveData<List<Exam>>> {
         private Dao dao;
         public getExamsBySubjectAsyncTask(Dao mDao) {
@@ -122,4 +126,34 @@ public class Repository {
             return dao.getExamsBySubject(strings[0]);
         }
     }
+
+    //------Assignment----------------------------------------
+
+    public LiveData<List<Assignment>> getAssigmentsBySubject(String subjectName){
+        try {
+            return new getAssignmentBySubjectAsyncTask(mDao).execute(subjectName).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private class getAssignmentBySubjectAsyncTask  extends AsyncTask<String, Void, LiveData<List<Assignment>>> {
+        private Dao dao;
+
+        public getAssignmentBySubjectAsyncTask(Dao mDao) {
+            dao = mDao;
+        }
+
+        @Override
+        protected LiveData<List<Assignment>> doInBackground(String... strings) {
+            return dao.getAssigmentsBySubject(strings[0]);
+        }
+    }
+
+
+
+
 }
