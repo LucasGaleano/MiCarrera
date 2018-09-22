@@ -14,6 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lucasgaleano.micarrera.R;
+import com.example.lucasgaleano.micarrera.database.Exam;
+
+import java.util.Calendar;
+import java.util.List;
 
 
 public class ListaView extends LinearLayout {
@@ -77,14 +81,14 @@ public class ListaView extends LinearLayout {
         header.setText(Titulo);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+
     public void addItem(String Titulo) {
         TextView item = new TextView(this.context);
         item.setText(Titulo);
         item.setTextSize(SizeLetra * (float) 0.8);
         item.setPadding((int) SizeLetra * 2, 5, 5, 5);
         this.addView(item);
-        this.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.header, null));
+        this.setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.header, null));
     }
 
     @Override
@@ -94,4 +98,40 @@ public class ListaView extends LinearLayout {
     }
 
 
+    public void update( final List<Exam> exams) {
+        cleanAll();
+        addAllItem(exams);
+    }
+
+
+    private void addAllItem(List<Exam> exams) {
+        int titulo;
+        String fecha;
+
+        for (Exam examen : exams)
+        {
+            titulo=examen.getType();
+            fecha=formatDate(examen.getDate());
+            addItem(titulo+"->"+fecha);
+        }
+
+    }
+
+    private void cleanAll() {
+        this.removeView(this);
+       // this.findViewById(5).setVisibility(View.GONE);
+
+    }
+
+
+
+    private String formatDate(Calendar cal) {
+
+        return String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).concat(
+                "/"+ String.valueOf(cal.get(Calendar.MONTH)).concat(
+                        "/"+ String.valueOf(cal.get(Calendar.YEAR))));
+
+    }
+
 }
+

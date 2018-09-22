@@ -1,33 +1,26 @@
 package com.example.lucasgaleano.micarrera.activities;
 
-import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
-
-import android.app.Activity;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
-import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class SubjectActivity extends AppCompatActivity {
 
@@ -76,14 +69,7 @@ public class SubjectActivity extends AppCompatActivity {
         repo.getAllExam().observe(this, new Observer<List<Exam>>() {
                     @Override
                     public void onChanged(@Nullable final List<Exam> exams) {
-                        for (Exam exam : exams) {
-                            Log.d("examen nombre: ", exam.getSubject());
-                            Log.d("examen nota: ", String.valueOf(exam.getScore()));
-                            Log.d("examen fecha: ", exam.getDate().getTime().toString());
-                            Calendar cal = exam.getDate();
-                            LM.addItem(Exam.get(exam.getType()) +" "+ formatDate(cal));
-
-                        }
+                    LM.update(exams);
                     }
                 });
 
