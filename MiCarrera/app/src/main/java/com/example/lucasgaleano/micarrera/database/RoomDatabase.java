@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import java.util.Calendar;
 
 @Database(entities = {Subject.class, SubjectPredecessor.class,
-                        Exam.class}, version = 1)
+                        Exam.class, Assignment.class, teacher.class}, version = 1)
 @TypeConverters({Converters.class})
 public abstract class RoomDatabase extends android.arch.persistence.room.RoomDatabase {
     public abstract Dao Dao();

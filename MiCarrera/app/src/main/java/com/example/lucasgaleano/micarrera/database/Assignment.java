@@ -1,12 +1,18 @@
 package com.example.lucasgaleano.micarrera.database;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Calendar;
 
 @Entity(tableName = "assignment_table")
 public class Assignment {
+
+    @Ignore
+    public static final int PENDIENTE = 0;
+    @Ignore
+    public static final int TERMINADA = 1;
 
     @PrimaryKey(autoGenerate= true)
     private int id_assignment;
@@ -16,6 +22,7 @@ public class Assignment {
     private String title;
     private String photo;
     private String Audio;
+    private int state;
 
 
     public int getId_assignment() {
@@ -72,5 +79,24 @@ public class Assignment {
 
     public void setAudio(String audio) {
         Audio = audio;
+    }
+
+    public static String get(int type) {
+        switch (type) {
+            case PENDIENTE:
+                return "Pendiente";
+            case TERMINADA:
+                return "Terminada";
+            default:
+                return null;
+        }
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }
