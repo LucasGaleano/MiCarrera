@@ -16,6 +16,7 @@ public class Subject {
     private int state;
     private int level;
     private int position;
+    private String website;
 
     public Subject(String name, int state, int level, int position){
         this.name = name;
@@ -55,5 +56,13 @@ public class Subject {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }

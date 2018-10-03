@@ -16,4 +16,8 @@
     <string name="title_section3">Section 3</string>
 
     <string name="action_example">Example action</string>
+    <string name="aprobada_state">Aprobada</string>
+    <string name="DejarMateria_state">Dejar Materia</string>
+    <string name="title_activity_calendar">CalendarActivity</string>
+    <string name="menu_calendario">Calendario</string>
 </resources>
