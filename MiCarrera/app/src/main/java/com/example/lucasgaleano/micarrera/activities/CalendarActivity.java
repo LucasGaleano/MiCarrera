@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.lucasgaleano.micarrera.R;
+import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
 public class CalendarActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +40,7 @@ public class CalendarActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        NavigationMenu nav = new NavigationMenu(this,drawer);
+        navigationView.setNavigationItemSelectedListener(nav.getListener());
     }
 }

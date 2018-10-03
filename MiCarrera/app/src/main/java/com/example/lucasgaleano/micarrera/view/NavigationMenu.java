@@ -6,7 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.activities.CalendarActivity;
@@ -30,12 +33,12 @@ public class NavigationMenu extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
 
-                if (id == R.id.nav_materias) {
+                if (id == R.id.nav_materias && getContext().getClass() != TreeActivity.class) {
                     Intent intent = new Intent(getContext(),TreeActivity.class);
                     getContext().startActivity(intent);
                 } else if (id == R.id.nav_Tareas) {
 
-                } else if (id == R.id.nav_calendario) {
+                } else if (id == R.id.nav_calendario && getContext().getClass() != CalendarActivity.class) {
                     Intent intent = new Intent(getContext(),CalendarActivity.class);
                     getContext().startActivity(intent);
                 }
@@ -44,16 +47,6 @@ public class NavigationMenu extends AppCompatActivity{
                 return true;
             }
         };
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (getDrawer().isDrawerOpen(GravityCompat.START)) {
-            getDrawer().closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
 
