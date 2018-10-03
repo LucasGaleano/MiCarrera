@@ -16,9 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.lucasgaleano.micarrera.R;
+import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
+
+    public DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,14 +39,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        NavigationMenu Nav = new NavigationMenu(this,drawer);
+        navigationView.setNavigationItemSelectedListener(Nav.getListener());
+        
     }
 
     @Override
@@ -78,26 +83,4 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_materias) {
-            Intent intent = new Intent(this,TreeActivity.class);
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        } else if (id == R.id.nav_Tareas) {
-
-        }
-
-        else if (id == R.id.nav_calendario) {
-            Intent intent = new Intent(this,CalendarActivity.class);
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

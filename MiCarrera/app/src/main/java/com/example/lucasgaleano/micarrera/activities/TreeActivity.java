@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import com.example.lucasgaleano.micarrera.database.Subject;
 import com.example.lucasgaleano.micarrera.dialog.SubjectDialogFragment;
+import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 import com.example.lucasgaleano.micarrera.view.SubjectTreeModel;
 import com.example.lucasgaleano.micarrera.view.SubjectTreeView;
 import com.example.lucasgaleano.micarrera.view.SubjectView;
@@ -26,8 +27,7 @@ import com.example.lucasgaleano.micarrera.R;
 
 import java.util.List;
 
-public class TreeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+public class TreeActivity extends AppCompatActivity{
 
     private final String TAG = TreeActivity.class.getSimpleName();
     private SubjectTreeView mSystemTreeView;
@@ -73,7 +73,8 @@ public class TreeActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        NavigationMenu Nav = new NavigationMenu(this,drawer);
+        navigationView.setNavigationItemSelectedListener(Nav.getListener());
     }
 
     View.OnClickListener clicks = new View.OnClickListener() {
@@ -100,21 +101,4 @@ public class TreeActivity extends AppCompatActivity
 
         }
     };
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_materias) {
-
-        } else if (id == R.id.nav_Tareas) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }
