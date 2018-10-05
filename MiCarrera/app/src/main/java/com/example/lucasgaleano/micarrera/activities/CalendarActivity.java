@@ -1,7 +1,6 @@
 package com.example.lucasgaleano.micarrera.activities;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -9,12 +8,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.CalendarView;
 
 import com.example.lucasgaleano.micarrera.R;
+import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
 public class CalendarActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private ListaView listaEventios;
+    private CalendarView calendarioEventos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +26,22 @@ public class CalendarActivity extends AppCompatActivity
         setContentView(R.layout.activity_calendar);
 
         initNavigationAndToolbar();
+        listaEventios = findViewById(R.id.listaEventos);
+        calendarioEventos = findViewById(R.id.calendarioEventos);
+
+        calendarioEventos.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                //TODO
+            }
+        });
+
+
     }
+
+
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
