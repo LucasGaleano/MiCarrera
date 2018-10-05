@@ -17,7 +17,7 @@ import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 public class CalendarActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ListaView listaEventios;
+    private ListaView listaEventos;
     private CalendarView calendarioEventos;
 
     @Override
@@ -26,7 +26,8 @@ public class CalendarActivity extends AppCompatActivity
         setContentView(R.layout.activity_calendar);
 
         initNavigationAndToolbar();
-        listaEventios = findViewById(R.id.listaEventos);
+        listaEventos = findViewById(R.id.listaEventos);
+        listaEventos.setHeader("Evento");
         calendarioEventos = findViewById(R.id.calendarioEventos);
 
         calendarioEventos.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
