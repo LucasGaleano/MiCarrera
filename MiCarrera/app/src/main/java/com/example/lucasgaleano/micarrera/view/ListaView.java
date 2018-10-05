@@ -105,12 +105,12 @@ public class ListaView extends LinearLayout {
 
 
     private void addAllItem(List<Exam> exams) {
-        int titulo;
+        String titulo;
         String fecha;
 
         for (Exam examen : exams)
         {
-            titulo=examen.getType();
+            titulo=Exam.get(examen.getType());
             fecha=formatDate(examen.getDate());
             addItem(titulo+"->"+fecha);
         }

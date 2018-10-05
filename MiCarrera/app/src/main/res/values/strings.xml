@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Mi carrera</string>
     <string name="title_activity_subject">SubjectActivity</string>
-    <string name="title_activity_tree">Algo</string>
+    <string name="title_activity_tree">Materias</string>
     <string name="nav_header_desc">dsa</string>
     <string name="nav_header_title">fdsa</string>
     <string name="nav_header_subtitle">qqqwqw</string>

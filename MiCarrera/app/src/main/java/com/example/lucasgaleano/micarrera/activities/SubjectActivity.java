@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -18,19 +22,20 @@ import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
 import com.example.lucasgaleano.micarrera.view.ListaView;
+import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
 
-    private TextView mtv;
-    private Switch mSwitch;
+    private Switch switchAprobada;
     private String subjectName;
     private Repository repo;
     private Subject sub;
     private int subjectState;
-    private ListaView LM,LM2;
+    private ListaView listaParciales, listaProfesores, listaExamenes;
+    private DrawerLayout drawer;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -38,6 +43,8 @@ public class SubjectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
+
+        initNavigationAndToolbar();
 
         repo = new Repository(getApplication());
         Intent intent = getIntent();
@@ -47,46 +54,44 @@ public class SubjectActivity extends AppCompatActivity {
         sub = new Subject(subjectName,
                 subjectState,0,0);
 
+        listaParciales = findViewById(R.id.listaParciales);
+        listaProfesores = findViewById(R.id.listaProfesores);
+        listaExamenes = findViewById(R.id.listaExamenes);
 
-        mtv = findViewById(R.id.textView2);
-        mtv.setText(subjectName);
-        mSwitch = findViewById(R.id.switch1);
-        boolean b = subjectState==1;
-        mSwitch.setChecked(b);
-        mSwitch.setText("Dejar de cursar");
 
-        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        this.setTitle(subjectName);
+        setSwichts();
+        setListas();
+
+
+        switchAprobada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                 if(b)
+                    sub.setState(getResources().getInteger(R.integer.APROBADA));
+                else
                     sub.setState(getResources().getInteger(R.integer.HABILITADA));
                 repo.updateSubject(sub);
 
             }
         });
 
-        repo.getAllExam().observe(this, new Observer<List<Exam>>() {
+        repo.getExamsBySubject(subjectName).observe(this, new Observer<List<Exam>>() {
                     @Override
                     public void onChanged(@Nullable final List<Exam> exams) {
-                    LM.update(exams);
+                    listaExamenes.update(exams);
                     }
                 });
 
-        LM = findViewById(R.id.ListaM);
-        LM.setHeader("Parciales");
 
-
-        LM2 = findViewById(R.id.ListaM2);
-        LM2.setHeader("Profesores:");
-        LM2.addItem("Item");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
-                LM.addItem("Audio");
+                listaParciales.addItem("Audio");
             }
         });
         FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
@@ -94,11 +99,49 @@ public class SubjectActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
-                LM2.addItem("Foto");
+                listaExamenes.addItem("Foto");
             }
         });
 
     }
+
+    private void setListas() {
+
+        listaParciales.setHeader("Parciales");
+        listaProfesores.setHeader("Profesores");
+        listaExamenes.setHeader("Examenes");
+
+    }
+
+    private void setSwichts() {
+
+        switchAprobada = findViewById(R.id.switchAprobada);
+        if(sub.getState() != getResources().getInteger(R.integer.APROBADA))
+            switchAprobada.setChecked(false);
+        else
+            switchAprobada.setChecked(true);
+
+
+
+    }
+
+    private void initNavigationAndToolbar() {
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationMenu Nav = new NavigationMenu(this,drawer);
+        navigationView.setNavigationItemSelectedListener(Nav.getListener());
+    }
+
+
 
     private String formatDate(Calendar cal) {
 
