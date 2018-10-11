@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.database.Exam;
@@ -109,7 +108,7 @@ public class SubjectActivity extends AppCompatActivity {
 
         listaParciales.setHeader("Parciales");
         listaProfesores.setHeader("Profesores");
-        listaExamenes.setHeader("Examenes");
+        listaExamenes.setHeader("Tareas");
 
     }
 

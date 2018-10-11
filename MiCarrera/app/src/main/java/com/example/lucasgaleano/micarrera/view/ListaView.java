@@ -1,6 +1,7 @@
 package com.example.lucasgaleano.micarrera.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lucasgaleano.micarrera.R;
+import com.example.lucasgaleano.micarrera.activities.ActivityInfo;
 import com.example.lucasgaleano.micarrera.database.Exam;
 
 import java.util.Calendar;
@@ -26,6 +28,7 @@ public class ListaView extends LinearLayout {
     private Context context;
     private Button add_header_button;
     private float SizeLetra = 20;
+    private Intent intentParciales,intentProfesores,intentTareas;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ListaView(Context context) {
@@ -65,8 +68,24 @@ public class ListaView extends LinearLayout {
         header.setTextSize(SizeLetra);
         add_header_button = new Button(this.context);
         add_header_button.setOnClickListener(new OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             public void onClick(View arg0) {
-                addItem("item2");
+                //addItem("item2");
+                if (header.getText().toString()=="Parciales") {
+                    intentParciales = new Intent(getContext(), ActivityInfo.class);
+                    intentParciales.putExtra("Click", "Parciales");
+                    context.startActivity(intentParciales);
+                }
+                if (header.getText().toString()=="Profesores") {
+                    intentProfesores = new Intent(getContext(), ActivityInfo.class);
+                    intentProfesores.putExtra("Click", "Profesores");
+                    context.startActivity(intentProfesores);
+                }
+                if (header.getText().toString()=="Tareas") {
+                    intentTareas = new Intent(getContext(), ActivityInfo.class);
+                    intentTareas.putExtra("Click", "Tareas");
+                    context.startActivity(intentTareas);
+                }
             }
         });
         add_header_button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_add_black_24dp, null));
