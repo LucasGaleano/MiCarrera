@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -126,6 +127,33 @@ public class Repository {
             return dao.getExamsBySubject(strings[0]);
         }
     }
+
+    public List<Exam> getExamsByDate(Calendar date) {
+        try {
+            return new getExamsByDateAsyncTask(mDao).execute(date).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private class getExamsByDateAsyncTask extends AsyncTask<Calendar, Void, List<Exam>> {
+
+        private Dao mDao;
+
+
+        getExamsByDateAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected List<Exam> doInBackground(Calendar... calendars) {
+            return mDao.getExamsByDate(calendars[0]);
+        }
+    }
+
 
     //------Assignment----------------------------------------
 

@@ -7,6 +7,7 @@ import android.arch.persistence.room.Update;
 
 import com.example.lucasgaleano.micarrera.view.SubjectView;
 
+import java.util.Calendar;
 import java.util.List;
 
 @android.arch.persistence.room.Dao
@@ -49,6 +50,9 @@ public interface Dao {
 
     @Query("SELECT * FROM EXAM_TABLE WHERE exam_table.subject=:subjectName")
     LiveData<List<Exam>> getExamsBySubject(String subjectName);
+
+    @Query("SELECT * FROM EXAM_TABLE WHERE exam_table.date=:dateExam")
+    List<Exam> getExamsByDate(Calendar dateExam);
 
     @Insert
     void insert(Exam... exams);
