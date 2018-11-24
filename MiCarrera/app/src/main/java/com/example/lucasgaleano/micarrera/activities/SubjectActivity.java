@@ -23,7 +23,6 @@ import com.example.lucasgaleano.micarrera.database.Subject;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
@@ -33,8 +32,9 @@ public class SubjectActivity extends AppCompatActivity {
     private Repository repo;
     private Subject sub;
     private int subjectState;
-    private ListaView listaParciales, listaProfesores, listaExamenes;
+    private ListaView listaTareas, listaProfesores, listaExamenes;
     private DrawerLayout drawer;
+    private Intent intentExam,intentProfesores,intentTareas;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -53,10 +53,17 @@ public class SubjectActivity extends AppCompatActivity {
         sub = new Subject(subjectName,
                 subjectState,0,0);
 
-        listaParciales = findViewById(R.id.listaParciales);
+        listaTareas = findViewById(R.id.listaTareas);
         listaProfesores = findViewById(R.id.listaProfesores);
         listaExamenes = findViewById(R.id.listaExamenes);
 
+        listaExamenes.setOnClicks(onClickItemExam);
+        listaProfesores.setOnClicks(onClickItemProfesores);
+        listaTareas.setOnClicks(onClickItemTareas);
+
+        intentExam = new Intent(this,ActivityInfo.class);
+        intentProfesores = new Intent(this,ActivityInfo.class);
+        intentTareas= new Intent(this,ActivityInfo.class);
 
         this.setTitle(subjectName);
         setSwichts();
@@ -90,7 +97,7 @@ public class SubjectActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
-                listaParciales.addItem("Audio");
+                listaTareas.addItem("Audio");
             }
         });
         FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
@@ -106,9 +113,9 @@ public class SubjectActivity extends AppCompatActivity {
 
     private void setListas() {
 
-        listaParciales.setHeader("Parciales");
+        listaTareas.setHeader("Tareas");
         listaProfesores.setHeader("Profesores");
-        listaExamenes.setHeader("Tareas");
+        listaExamenes.setHeader("Examenes");
 
     }
 
@@ -142,11 +149,28 @@ public class SubjectActivity extends AppCompatActivity {
 
 
 
-    private String formatDate(Calendar cal) {
+    View.OnClickListener onClickItemExam = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
-        return String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).concat(
-                "/"+ String.valueOf(cal.get(Calendar.MONTH)).concat(
-                        "/"+ String.valueOf(cal.get(Calendar.YEAR))));
+            startActivity(intentExam);
+        }
+    };
 
-    }
+    View.OnClickListener onClickItemProfesores = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            startActivity(intentProfesores);
+        }
+    };
+
+    View.OnClickListener onClickItemTareas = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            startActivity(intentTareas);
+        }
+    };
+
 }

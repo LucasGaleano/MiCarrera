@@ -19,7 +19,6 @@ import com.example.lucasgaleano.micarrera.activities.ActivityInfo;
 import com.example.lucasgaleano.micarrera.classes.Calendario;
 import com.example.lucasgaleano.micarrera.database.Exam;
 
-import java.util.Calendar;
 import java.util.List;
 
 

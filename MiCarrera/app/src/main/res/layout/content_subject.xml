@@ -24,7 +24,7 @@
             android:padding="16dp">
 
             <com.example.lucasgaleano.micarrera.view.ListaView
-                android:id="@+id/listaParciales"
+                android:id="@+id/listaTareas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                app:layout_constraintTop_toBottomOf="@id/listaParciales"
+                app:layout_constraintTop_toBottomOf="@id/listaTareas"
                 app:layout_constraintBottom_toTopOf="@id/listaProfesores"/>
 
             <com.example.lucasgaleano.micarrera.view.ListaView

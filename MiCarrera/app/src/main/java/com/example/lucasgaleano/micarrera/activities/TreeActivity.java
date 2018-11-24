@@ -1,7 +1,6 @@
 package com.example.lucasgaleano.micarrera.activities;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -14,16 +13,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+
+import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.database.Subject;
 import com.example.lucasgaleano.micarrera.dialog.SubjectDialogFragment;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 import com.example.lucasgaleano.micarrera.view.SubjectTreeModel;
 import com.example.lucasgaleano.micarrera.view.SubjectTreeView;
 import com.example.lucasgaleano.micarrera.view.SubjectView;
-import com.example.lucasgaleano.micarrera.R;
 
 import java.util.List;
 
