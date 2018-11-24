@@ -4,6 +4,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.example.lucasgaleano.micarrera.classes.Calendario;
+
 import java.util.Calendar;
 
 @Entity(tableName = "exam_table")
@@ -120,5 +122,10 @@ public class Exam {
             default:
                 return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.get(this.type) +" "+ Calendario.formatDate(this.getDate());
     }
 }

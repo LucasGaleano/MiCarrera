@@ -99,4 +99,9 @@ public class Assignment {
     public void setState(int state) {
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        return this.title;
+    }
 }
