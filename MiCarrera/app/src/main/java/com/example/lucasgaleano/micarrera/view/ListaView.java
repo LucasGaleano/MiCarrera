@@ -30,6 +30,7 @@ public class ListaView extends LinearLayout {
     private Button add_header_button;
     private float SizeLetra = 20;
     private String titulo;
+    private OnClickListener onClick;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -100,6 +101,7 @@ public class ListaView extends LinearLayout {
         item.setText(Titulo);
         item.setTextSize(SizeLetra * (float) 0.8);
         item.setPadding((int) SizeLetra * 2, 5, 5, 5);
+        item.setOnClickListener(this.onClick);
         this.addView(item);
         this.setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.header, null));
     }
@@ -137,5 +139,8 @@ public class ListaView extends LinearLayout {
         this.setHeader(this.titulo);
     }
 
+    public void setOnClicks(OnClickListener onClicks) {
+        this.onClick = onClicks;
+    }
 }
 

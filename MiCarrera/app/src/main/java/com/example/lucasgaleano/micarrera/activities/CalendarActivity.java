@@ -4,6 +4,7 @@ package com.example.lucasgaleano.micarrera.activities;
 import android.arch.lifecycle.Observer;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -42,17 +43,17 @@ public class CalendarActivity extends AppCompatActivity
         setContentView(R.layout.activity_calendar);
 
         initNavigationAndToolbar();
-        listaExamenes = new ArrayList<>();
         repo = new Repository(getApplication());
+        listaExamenes = new ArrayList<>();
         listaEventos = findViewById(R.id.listaEventos);
-        listaEventos.setHeader("Evento");
         calendarioEventos = findViewById(R.id.calendarioEventos);
+        listaEventos.setHeader("Evento");
+
 
         calendarioEventos.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-
                 listaEventos.update(Calendario.filtrarExamenesPorFecha(listaExamenes,year,month,day));
             }
         });
