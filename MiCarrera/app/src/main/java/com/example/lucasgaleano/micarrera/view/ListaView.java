@@ -113,22 +113,16 @@ public class ListaView extends LinearLayout {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void update( final List<Exam> exams) {
+    public void update(List<?> items) {
         cleanAll();
-        addAllItem(exams);
+        addAllItem(items);
     }
 
 
-    private void addAllItem(List<Exam> exams) {
-        String titulo;
-        String fecha;
+    private void addAllItem(List<?> items) {
 
-        for (Exam examen : exams)
-        {
-            titulo=Exam.get(examen.getType());
-            fecha= Calendario.formatDate(examen.getDate());
-            addItem(titulo+"->"+fecha);
-        }
+        for (Object item : items)
+            this.addItem(item.toString());
 
     }
 
