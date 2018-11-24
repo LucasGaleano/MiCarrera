@@ -2,9 +2,11 @@ package com.example.lucasgaleano.micarrera.activities;
 
 
 import android.arch.lifecycle.Observer;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.CalendarView;
 
 import com.example.lucasgaleano.micarrera.R;
+import com.example.lucasgaleano.micarrera.classes.Calendario;
 import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.view.ListaView;
@@ -46,37 +49,26 @@ public class CalendarActivity extends AppCompatActivity
         calendarioEventos = findViewById(R.id.calendarioEventos);
 
         calendarioEventos.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-                Calendar aux = Calendar.getInstance();
-                aux.set(i,i1,i2);
-                Log.d("date",formatDate(aux));
-                listaEventos.update(listaExamenes);
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+
+                listaEventos.update(Calendario.filtrarExamenesPorFecha(listaExamenes,year,month,day));
             }
         });
+
+
 
         repo.getAllExam().observe(this, new Observer<List<Exam>>() {
             @Override
             public void onChanged(@Nullable final List<Exam> exams) {
                 listaExamenes.clear();
-                for(Exam examen : exams){
-                    listaExamenes.add(examen);
-                }
+                listaExamenes.addAll(exams);
             }
         });
 
 
     }
-
-    private String formatDate(Calendar cal) {
-
-        return String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).concat(
-                "/"+ String.valueOf(cal.get(Calendar.MONTH)).concat(
-                        "/"+ String.valueOf(cal.get(Calendar.YEAR))));
-
-    }
-
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

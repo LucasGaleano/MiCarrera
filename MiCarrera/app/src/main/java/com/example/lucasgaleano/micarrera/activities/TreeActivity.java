@@ -95,10 +95,6 @@ public class TreeActivity extends AppCompatActivity{
             SubjectView sub = (SubjectView) v;
             intentSubjectActivity.putExtra(EXTRA_NAME_SUBJECT, sub.getText().toString());
             intentSubjectActivity.putExtra(EXTRA_STATE_SUBJECT, sub.getState());
-            Log.d(TAG,"click on subject: " + sub.getText().toString() + "\nlevel: "
-                            + String.valueOf(sub.getLevel()) + "\nstate: "
-                            + String.valueOf(sub.getState()) + "\nposition:"
-                            + String.valueOf(sub.getPosition()));
             if(sub.getState() == getResources().getInteger(R.integer.HABILITADA)){
                 DialogFragment dialog = new SubjectDialogFragment();
                 Bundle args = new Bundle();
@@ -106,10 +102,8 @@ public class TreeActivity extends AppCompatActivity{
                 dialog.setArguments(args);
                 dialog.show(getSupportFragmentManager(),"Choose");
             }else{
-                startActivity(intentSubjectActivity, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
+                startActivity(intentSubjectActivity);
             }
-
-
         }
     };
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.activities.ActivityInfo;
+import com.example.lucasgaleano.micarrera.classes.Calendario;
 import com.example.lucasgaleano.micarrera.database.Exam;
 
 import java.util.Calendar;
@@ -28,7 +29,8 @@ public class ListaView extends LinearLayout {
     private Context context;
     private Button add_header_button;
     private float SizeLetra = 20;
-    private Intent intentParciales,intentProfesores,intentTareas;
+    private String titulo;
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ListaView(Context context) {
@@ -47,6 +49,7 @@ public class ListaView extends LinearLayout {
         super(context, attrs, defStyleAttr);
         init(context);
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void init(Context context) {
@@ -67,27 +70,15 @@ public class ListaView extends LinearLayout {
         header.setPadding(20, 10, 10, 10);
         header.setTextSize(SizeLetra);
         add_header_button = new Button(this.context);
+
         add_header_button.setOnClickListener(new OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            public void onClick(View arg0) {
-                //addItem("item2");
-                if (header.getText().toString()=="Parciales") {
-                    intentParciales = new Intent(getContext(), ActivityInfo.class);
-                    intentParciales.putExtra("Click", "Parciales");
-                    context.startActivity(intentParciales);
-                }
-                if (header.getText().toString()=="Profesores") {
-                    intentProfesores = new Intent(getContext(), ActivityInfo.class);
-                    intentProfesores.putExtra("Click", "Profesores");
-                    context.startActivity(intentProfesores);
-                }
-                if (header.getText().toString()=="Tareas") {
-                    intentTareas = new Intent(getContext(), ActivityInfo.class);
-                    intentTareas.putExtra("Click", "Tareas");
-                    context.startActivity(intentTareas);
-                }
-            }
-        });
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ActivityInfo.class);
+                intent.putExtra("Click", header.getText().toString());
+                context.startActivity(intent);
+            }});
+
         add_header_button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_add_black_24dp, null));
         add_header_button.setBackgroundResource(R.drawable.selectorimagen);
         add_header_button.setLayoutParams(new LinearLayout.LayoutParams(70, 70));
@@ -96,7 +87,10 @@ public class ListaView extends LinearLayout {
         this.addView(headerLayout);
     }
 
+
+
     public void setHeader(String Titulo) {
+        this.titulo = Titulo;
         header.setText(Titulo);
     }
 
@@ -116,7 +110,7 @@ public class ListaView extends LinearLayout {
 
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void update( final List<Exam> exams) {
         cleanAll();
         addAllItem(exams);
@@ -130,26 +124,17 @@ public class ListaView extends LinearLayout {
         for (Exam examen : exams)
         {
             titulo=Exam.get(examen.getType());
-            fecha=formatDate(examen.getDate());
+            fecha= Calendario.formatDate(examen.getDate());
             addItem(titulo+"->"+fecha);
         }
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void cleanAll() {
-        this.removeView(this);
-       // this.findViewById(5).setVisibility(View.GONE);
-
-    }
-
-
-
-    private String formatDate(Calendar cal) {
-
-        return String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).concat(
-                "/"+ String.valueOf(cal.get(Calendar.MONTH)).concat(
-                        "/"+ String.valueOf(cal.get(Calendar.YEAR))));
-
+        this.removeAllViews();
+        this.createHeader();
+        this.setHeader(this.titulo);
     }
 
 }
