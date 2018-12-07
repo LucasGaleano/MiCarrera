@@ -8,4 +8,5 @@
     <color name="colorCursando">#c8ffa200</color>
     <color name="colorCursada">#c8ccff90</color>
     <color name="colorAprobada">#c876ff03</color>
+    <color name="Blanco">#ffffffff</color>
 </resources>

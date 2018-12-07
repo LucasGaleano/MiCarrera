@@ -1,10 +1,10 @@
 package com.example.lucasgaleano.micarrera.activities;
 
+import android.annotation.TargetApi;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -37,7 +37,7 @@ public class SubjectActivity extends AppCompatActivity {
     private Intent intentExam,intentProfesores,intentTareas;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +61,9 @@ public class SubjectActivity extends AppCompatActivity {
         listaProfesores.setOnClicks(onClickItemProfesores);
         listaTareas.setOnClicks(onClickItemTareas);
 
-        intentExam = new Intent(this,ActivityInfo.class);
-        intentProfesores = new Intent(this,ActivityInfo.class);
-        intentTareas= new Intent(this,ActivityInfo.class);
+        intentExam = new Intent(this,activity_assigment.class);
+        intentProfesores = new Intent(this,activity_assigment.class);
+        intentTareas= new Intent(this,activity_assigment.class);
 
         this.setTitle(subjectName);
         setSwichts();
@@ -84,8 +84,10 @@ public class SubjectActivity extends AppCompatActivity {
         });
 
         repo.getExamsBySubject(subjectName).observe(this, new Observer<List<Exam>>() {
+                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
-                    public void onChanged(@Nullable final List<Exam> exams) {
+                    public void onChanged(final List<Exam> exams) {
                     listaExamenes.update(exams);
                     }
                 });
@@ -169,7 +171,12 @@ public class SubjectActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
+            intentTareas.putExtra("Materia",v.toString());
+            intentTareas.putExtra("Fecha","Fecha:");
+            intentTareas.putExtra("Descripcion","Descripcion:");
+
             startActivity(intentTareas);
+
         }
     };
 

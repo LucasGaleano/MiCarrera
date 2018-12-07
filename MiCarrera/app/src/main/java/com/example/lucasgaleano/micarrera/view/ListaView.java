@@ -2,11 +2,14 @@ package com.example.lucasgaleano.micarrera.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +19,7 @@ import android.widget.TextView;
 
 import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.activities.ActivityInfo;
-import com.example.lucasgaleano.micarrera.classes.Calendario;
-import com.example.lucasgaleano.micarrera.database.Exam;
+import com.example.lucasgaleano.micarrera.classes.Ltextview;
 
 import java.util.List;
 
@@ -30,7 +32,6 @@ public class ListaView extends LinearLayout {
     private float SizeLetra = 20;
     private String titulo;
     private OnClickListener onClick;
-
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ListaView(Context context) {
@@ -96,7 +97,10 @@ public class ListaView extends LinearLayout {
 
 
     public void addItem(String Titulo) {
-        TextView item = new TextView(this.context);
+        Ltextview item = new Ltextview(this.context);
+        item.setBackgroundColor(getResources().getColor(R.color.Blanco)) ;
+        final ColorStateList backgroundTintList = AppCompatResources.getColorStateList(context, R.color.Blanco);
+        ViewCompat.setBackgroundTintList(item, backgroundTintList);
         item.setText(Titulo);
         item.setTextSize(SizeLetra * (float) 0.8);
         item.setPadding((int) SizeLetra * 2, 5, 5, 5);
