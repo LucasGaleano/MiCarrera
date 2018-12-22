@@ -16,7 +16,7 @@ private TextView Texto;
         Intent intent = getIntent();
 
         Texto=findViewById(R.id.textView1);
-        Texto.setText(intent.getStringExtra("Click"));
+        Texto.setText(intent.getIntExtra("ID",0));
 
     }
 }

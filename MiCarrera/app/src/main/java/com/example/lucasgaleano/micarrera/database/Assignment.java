@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 import java.util.Calendar;
 
 @Entity(tableName = "assignment_table")
-public class Assignment {
+public class Assignment{
 
     @Ignore
     public static final int PENDIENTE = 0;
@@ -24,6 +24,15 @@ public class Assignment {
     private String Audio;
     private int state;
 
+    public Assignment(Calendar date,String subject,String description,String title, String photo, String Audio, int state ) {
+        this.date = date;
+        this.title = title;
+        this.subject = subject;
+        this.description = description;
+        this.photo=photo;
+        this.Audio=Audio;
+        this.state=state;
+    }
 
     public int getId_assignment() {
         return id_assignment;

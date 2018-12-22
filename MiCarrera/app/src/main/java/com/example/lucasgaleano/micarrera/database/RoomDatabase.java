@@ -181,6 +181,11 @@ public abstract class RoomDatabase extends android.arch.persistence.room.RoomDat
             mDao.insert(new Exam("MD", Calendar.getInstance(),1,8));
 
 
+            mDao.insert(new Assignment(Calendar.getInstance(),"AM2","Estudiar mucho!","Estudiar -.-","foto","audio",0));
+            mDao.insert(new Assignment(Calendar.getInstance(),"Fisica","Estudiar mucho!","Estudiar -.-","foto","audio",0));
+
+
+
         }
     }
 }

@@ -13,12 +13,14 @@ public class Repository {
     private Dao mDao;
     private LiveData<List<Subject>> mSubject;
     private LiveData<List<Exam>> mExam;
+    private LiveData<List<Assignment>> mAssigment;
 
     public Repository(Application application) {
         RoomDatabase db = RoomDatabase.getDatabase(application);
         mDao = db.Dao();
         mSubject = mDao.getAllSubjects();
         mExam = mDao.getAllExams();
+        mAssigment = mDao.getAllAssigment();
     }
 
     //------Subjects----------------------------------------
@@ -53,6 +55,7 @@ public class Repository {
         }
         return null;
     }
+
 
     private class getPredecessorByNameAsyncTask extends AsyncTask<String, Void, List<String>> {
 
@@ -156,6 +159,11 @@ public class Repository {
 
 
     //------Assignment----------------------------------------
+
+
+    public LiveData<List<Assignment>> getAllAssigments() {
+        return mAssigment;
+    }
 
     public LiveData<List<Assignment>> getAssigmentsBySubject(String subjectName){
         try {

@@ -17,6 +17,8 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.example.lucasgaleano.micarrera.R;
+import com.example.lucasgaleano.micarrera.classes.ItemListaView;
+import com.example.lucasgaleano.micarrera.database.Assignment;
 import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
@@ -70,6 +72,7 @@ public class SubjectActivity extends AppCompatActivity {
         setListas();
 
 
+
         switchAprobada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -93,17 +96,27 @@ public class SubjectActivity extends AppCompatActivity {
                 });
 
 
+        repo.getAllAssigments().observe(this, new Observer<List<Assignment>>() {
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onChanged(final List<Assignment> assignments) {
+                listaTareas.update(assignments);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
-                listaTareas.addItem("Audio");
+                listaTareas.addItem("dd");
             }
         });
         FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         fab2.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
@@ -171,10 +184,8 @@ public class SubjectActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            intentTareas.putExtra("Materia",v.toString());
-            intentTareas.putExtra("Fecha","Fecha:");
-            intentTareas.putExtra("Descripcion","Descripcion:");
-
+            Assignment aux = (Assignment) ((ItemListaView)v).getItem();
+            intentTareas.putExtra("ID",((Assignment)aux).getId_assignment());
             startActivity(intentTareas);
 
         }

@@ -1,5 +1,6 @@
 package com.example.lucasgaleano.micarrera.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 
 import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.activities.ActivityInfo;
-import com.example.lucasgaleano.micarrera.classes.Ltextview;
+import com.example.lucasgaleano.micarrera.classes.ItemListaView;
 
 import java.util.List;
 
@@ -96,16 +97,17 @@ public class ListaView extends LinearLayout {
     }
 
 
-    public void addItem(String Titulo) {
-        Ltextview item = new Ltextview(this.context);
-        item.setBackgroundColor(getResources().getColor(R.color.Blanco)) ;
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public void addItem(Object item) {
+        ItemListaView lItem = new ItemListaView(context);
+        lItem.setBackgroundColor(getResources().getColor(R.color.Blanco)) ;
         final ColorStateList backgroundTintList = AppCompatResources.getColorStateList(context, R.color.Blanco);
-        ViewCompat.setBackgroundTintList(item, backgroundTintList);
-        item.setText(Titulo);
-        item.setTextSize(SizeLetra * (float) 0.8);
-        item.setPadding((int) SizeLetra * 2, 5, 5, 5);
-        item.setOnClickListener(this.onClick);
-        this.addView(item);
+        ViewCompat.setBackgroundTintList(lItem, backgroundTintList);
+        lItem.setTextSize(SizeLetra * (float) 0.8);
+        lItem.setPadding((int) SizeLetra * 2, 5, 5, 5);
+        lItem.setOnClickListener(this.onClick);
+        lItem.additem(item);
+        this.addView(lItem);
         this.setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.header, null));
     }
 
@@ -115,6 +117,7 @@ public class ListaView extends LinearLayout {
 
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void update(List<?> items) {
         cleanAll();
@@ -122,10 +125,11 @@ public class ListaView extends LinearLayout {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void addAllItem(List<?> items) {
 
         for (Object item : items)
-            this.addItem(item.toString());
+            this.addItem(item);
 
     }
 

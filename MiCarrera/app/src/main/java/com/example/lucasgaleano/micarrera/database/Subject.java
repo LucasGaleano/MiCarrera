@@ -1,6 +1,5 @@
 package com.example.lucasgaleano.micarrera.database;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -65,4 +64,5 @@ public class Subject {
     public void setWebsite(String website) {
         this.website = website;
     }
+
 }

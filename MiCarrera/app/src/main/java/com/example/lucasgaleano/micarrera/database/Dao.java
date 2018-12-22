@@ -5,8 +5,6 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.example.lucasgaleano.micarrera.view.SubjectView;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -72,7 +70,8 @@ public interface Dao {
     LiveData<List<Assignment>> getAssigmentsBySubject(String subjectName);
 
 
-
+    @Query("SELECT * FROM assignment_table")
+    LiveData<List<Assignment>> getAllAssigment();
 
 
 }
