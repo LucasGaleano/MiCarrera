@@ -102,6 +102,29 @@ public class Repository {
     }
 
     //------Exam----------------------------------------
+    public Exam getExamById(int id){
+        try {
+            return new getExamByIdAsyncTask(mDao).execute(id).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private class getExamByIdAsyncTask  extends AsyncTask<Integer, Void, Exam> {
+        private Dao dao;
+
+        public getExamByIdAsyncTask(Dao mDao) {
+            dao = mDao;
+        }
+
+        @Override
+        protected Exam doInBackground (Integer... integers) {
+            return dao.getExamsById(integers[0]);
+        }
+    }
 
     public LiveData<List<Exam>> getAllExam() {
         return mExam;
@@ -160,6 +183,16 @@ public class Repository {
 
     //------Assignment----------------------------------------
 
+    public Assignment getAssigmentById(int id){
+        try {
+            return new getAssigmentByIdAsyncTask(mDao).execute(id).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public LiveData<List<Assignment>> getAllAssigments() {
         return mAssigment;
@@ -176,6 +209,19 @@ public class Repository {
         return null;
     }
 
+    private class getAssigmentByIdAsyncTask  extends AsyncTask<Integer, Void, Assignment> {
+        private Dao dao;
+
+        public getAssigmentByIdAsyncTask(Dao mDao) {
+            dao = mDao;
+        }
+
+        @Override
+        protected Assignment doInBackground (Integer... integers) {
+            return dao.getAssigmentsById(integers[0]);
+        }
+    }
+
     private class getAssignmentBySubjectAsyncTask  extends AsyncTask<String, Void, LiveData<List<Assignment>>> {
         private Dao dao;
 
@@ -188,8 +234,6 @@ public class Repository {
             return dao.getAssigmentsBySubject(strings[0]);
         }
     }
-
-
 
 
 }

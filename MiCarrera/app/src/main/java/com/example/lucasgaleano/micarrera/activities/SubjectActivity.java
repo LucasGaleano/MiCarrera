@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +21,7 @@ import com.example.lucasgaleano.micarrera.database.Assignment;
 import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
+import com.example.lucasgaleano.micarrera.database.teacher;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
@@ -36,7 +36,8 @@ public class SubjectActivity extends AppCompatActivity {
     private int subjectState;
     private ListaView listaTareas, listaProfesores, listaExamenes;
     private DrawerLayout drawer;
-    private Intent intentExam,intentProfesores,intentTareas;
+    public static final String EXTRA_ID = "com.example.lucasgaleano.micarrera.extra.ID";
+
 
 
 
@@ -63,9 +64,7 @@ public class SubjectActivity extends AppCompatActivity {
         listaProfesores.setOnClicks(onClickItemProfesores);
         listaTareas.setOnClicks(onClickItemTareas);
 
-        intentExam = new Intent(this,activity_assigment.class);
-        intentProfesores = new Intent(this,activity_assigment.class);
-        intentTareas= new Intent(this,activity_assigment.class);
+
 
         this.setTitle(subjectName);
         setSwichts();
@@ -105,24 +104,7 @@ public class SubjectActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onClick(View view) {
-                listaTareas.addItem("dd");
-            }
-        });
-        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onClick(View view) {
-                listaExamenes.addItem("Foto");
-            }
-        });
+
 
     }
 
@@ -167,7 +149,10 @@ public class SubjectActivity extends AppCompatActivity {
     View.OnClickListener onClickItemExam = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Intent intentExam;
+            intentExam = new Intent(v.getContext(),ExamInfoActivity.class);
+            Exam aux = (Exam) ((ItemListaView)v).getItem();
+            intentExam.putExtra(EXTRA_ID,aux.getId_exam());
             startActivity(intentExam);
         }
     };
@@ -175,7 +160,10 @@ public class SubjectActivity extends AppCompatActivity {
     View.OnClickListener onClickItemProfesores = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Intent intentProfesores;
+            intentProfesores = new Intent(v.getContext(),TeacherInfoActivity.class);
+            teacher aux = (teacher) ((ItemListaView)v).getItem();
+            intentProfesores.putExtra(EXTRA_ID,aux.getId_teacher());
             startActivity(intentProfesores);
         }
     };
@@ -183,9 +171,10 @@ public class SubjectActivity extends AppCompatActivity {
     View.OnClickListener onClickItemTareas = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Intent intentTareas;
+            intentTareas= new Intent(v.getContext(),AssignmentInfoActivity.class);
             Assignment aux = (Assignment) ((ItemListaView)v).getItem();
-            intentTareas.putExtra("ID",((Assignment)aux).getId_assignment());
+            intentTareas.putExtra(EXTRA_ID,aux.getId_assignment());
             startActivity(intentTareas);
 
         }

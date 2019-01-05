@@ -3,6 +3,7 @@ package com.example.lucasgaleano.micarrera.view;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.os.Build;
@@ -19,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lucasgaleano.micarrera.R;
-import com.example.lucasgaleano.micarrera.activities.ActivityInfo;
 import com.example.lucasgaleano.micarrera.classes.ItemListaView;
 
 import java.util.List;

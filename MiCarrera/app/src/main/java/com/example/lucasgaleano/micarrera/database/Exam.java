@@ -40,13 +40,15 @@ public class Exam {
     private Calendar date;
     private int type;
     private float score;
+    private String description;
 
-    public Exam(String subject, Calendar date, int type, float score) {
+    public Exam(String subject, Calendar date, int type, float score,String description ) {
 
-        this.subject = subject;
-        this.date = date;
-        this.type = type;
-        this.score = score;
+        this.setSubject(subject);
+        this.setDate(date);
+        this.setType(type);
+        this.setScore(score);
+        this.setDescription(description);
     }
 
     public int getId_exam() {
@@ -89,6 +91,14 @@ public class Exam {
         this.score = score;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public static String get(int type) {
         switch (type) {
             case PARCIAL1:
@@ -124,8 +134,11 @@ public class Exam {
         }
     }
 
+
+
     @Override
     public String toString() {
         return this.get(this.type) +" "+ Calendario.formatDate(this.getDate());
     }
+
 }

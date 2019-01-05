@@ -46,11 +46,14 @@ public interface Dao {
     @Query("SELECT * FROM exam_table")
     LiveData<List<Exam>> getAllExams();
 
-    @Query("SELECT * FROM EXAM_TABLE WHERE exam_table.subject=:subjectName")
+    @Query("SELECT * FROM exam_table WHERE exam_table.subject=:subjectName")
     LiveData<List<Exam>> getExamsBySubject(String subjectName);
 
-    @Query("SELECT * FROM EXAM_TABLE WHERE exam_table.date=:dateExam")
+    @Query("SELECT * FROM exam_table WHERE exam_table.date=:dateExam")
     List<Exam> getExamsByDate(Calendar dateExam);
+
+    @Query("SELECT * FROM exam_table WHERE exam_table.id_exam=:id")
+    Exam getExamsById(int id);
 
     @Insert
     void insert(Exam... exams);
@@ -65,6 +68,10 @@ public interface Dao {
 
     @Update
     void update(Assignment... assignments);
+
+    @Query("SELECT * FROM assignment_table WHERE assignment_table.id_assignment=:id")
+    Assignment getAssigmentsById(int id);
+
 
     @Query("SELECT * FROM assignment_table WHERE assignment_table.subject=:subjectName")
     LiveData<List<Assignment>> getAssigmentsBySubject(String subjectName);

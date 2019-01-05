@@ -1,12 +1,9 @@
 package com.example.lucasgaleano.micarrera.activities;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,11 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    /*
+    * Make it work.
+    * Make it right.
+    * Make it faster.
+    */
 
     private DrawerLayout drawer;
 
@@ -85,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            return true;//
         }
 
         return super.onOptionsItemSelected(item);
