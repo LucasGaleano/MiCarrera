@@ -183,6 +183,32 @@ public class Repository {
 
     //------Assignment----------------------------------------
 
+    public void update(Assignment assignment){
+        try {
+            new updateAsyncTask(mDao).execute(assignment).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private class updateAsyncTask extends AsyncTask<Assignment, Void, Void> {
+
+        private Dao mDao;
+
+
+        updateAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Assignment... assignments) {
+            mDao.update(assignments[0]);
+            return null;
+        }
+    }
+
     public Assignment getAssigmentById(int id){
         try {
             return new getAssigmentByIdAsyncTask(mDao).execute(id).get();
