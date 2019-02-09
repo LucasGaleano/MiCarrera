@@ -36,9 +36,6 @@
             android:name=".activities.CalendarActivity"
             android:label="@string/title_activity_calendar"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.ScrollingActivity"
-            android:label="@string/title_activity_scrolling" />
         <activity android:name=".activities.ExamInfoActivity" />
         <activity android:name=".activities.AssignmentInfoActivity" />
         <activity android:name=".activities.TeacherInfoActivity"></activity>

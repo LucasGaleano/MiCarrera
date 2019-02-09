@@ -32,10 +32,15 @@ public class EditDialogFragment extends DialogFragment {
         builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               if(title.equals("title")){
-                   self.assignment.setTitle(content);
+                if(title.equals("title")) {
+                    self.assignment.setTitle(edittext.getText().toString());
+                }
+                if(title.equals("description")) {
+                    self.assignment.setDescription(edittext.getText().toString());
+                }
+
                    self.repo.update(self.assignment);
-               }
+                   self.recreate();
                 dismiss();
             }
         });
