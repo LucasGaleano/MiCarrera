@@ -3,6 +3,7 @@ package com.example.lucasgaleano.micarrera.database;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import java.util.Calendar;
 
@@ -16,9 +17,11 @@ public class Assignment{
 
     @PrimaryKey(autoGenerate= true)
     private int id_assignment;
+    @NonNull
     private Calendar date;
     private String subject;
     private String description;
+    @NonNull
     private String title;
     private String photo;
     private String Audio;

@@ -37,8 +37,12 @@ public class AssignmentInfoActivity extends AppCompatActivity{
         int id = intent.getIntExtra(SubjectActivity.EXTRA_ID, -1);
 
         repo = new Repository(getApplication());
-        assignment = repo.getAssigmentById(id);
-
+        if(id == -1) {
+            assignment = new Assignment(Calendar.getInstance(), "prueba", "", "blah blah blah", "", "", 0);
+        }
+        else {
+            assignment = repo.getAssigmentById(id);
+        }
         titleTxt = findViewById(R.id.title);
         dateTxt = findViewById(R.id.date);
         descriptionTxt = findViewById(R.id.description);

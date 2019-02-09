@@ -204,7 +204,11 @@ public class Repository {
 
         @Override
         protected Void doInBackground(Assignment... assignments) {
-            mDao.update(assignments[0]);
+            Assignment assigment = mDao.getAssigmentsById(assignments[0].getId_assignment());
+            if(assigment == null)
+                mDao.insert(assignments[0]);
+            else
+                mDao.update(assignments[0]);
             return null;
         }
     }

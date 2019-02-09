@@ -2,8 +2,6 @@ package com.example.lucasgaleano.micarrera.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.os.Build;
@@ -13,7 +11,6 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,6 +30,7 @@ public class ListaView extends LinearLayout {
     private float SizeLetra = 20;
     private String titulo;
     private OnClickListener onClick;
+    private OnClickListener addClick;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ListaView(Context context) {
@@ -73,13 +71,7 @@ public class ListaView extends LinearLayout {
         header.setTextSize(SizeLetra);
         add_header_button = new Button(this.context);
 
-        add_header_button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ActivityInfo.class);
-                intent.putExtra("Click", header.getText().toString());
-                context.startActivity(intent);
-            }});
+        add_header_button.setOnClickListener(addClick);
 
         add_header_button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_add_black_24dp, null));
         add_header_button.setBackgroundResource(R.drawable.selectorimagen);
@@ -142,6 +134,10 @@ public class ListaView extends LinearLayout {
 
     public void setOnClicks(OnClickListener onClicks) {
         this.onClick = onClicks;
+    }
+
+    public void setAddClick(OnClickListener onClicks){
+        this.addClick = onClicks;
     }
 }
 

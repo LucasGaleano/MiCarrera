@@ -111,6 +111,7 @@ public class SubjectActivity extends AppCompatActivity {
     private void setListas() {
 
         listaTareas.setHeader("Tareas");
+        listaTareas.setAddClick(onClickAddItem);
         listaProfesores.setHeader("Profesores");
         listaExamenes.setHeader("Examenes");
 
@@ -177,6 +178,15 @@ public class SubjectActivity extends AppCompatActivity {
             intentTareas.putExtra(EXTRA_ID,aux.getId_assignment());
             startActivity(intentTareas);
 
+        }
+    };
+
+    View.OnClickListener onClickAddItem = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intentAdditem;
+            intentAdditem = new Intent(v.getContext(),AssignmentInfoActivity.class);
+            startActivity(intentAdditem);
         }
     };
 
