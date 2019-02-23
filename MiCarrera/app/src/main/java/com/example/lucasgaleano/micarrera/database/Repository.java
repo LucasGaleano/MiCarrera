@@ -41,7 +41,7 @@ public class Repository {
 
     }
 
-    public void updateSubject(Subject subject) {
+    public void update(Subject subject) {
         new updateSubjectAsyncTask(mDao).execute(subject);
     }
 
@@ -56,6 +56,23 @@ public class Repository {
         return null;
     }
 
+    public void delete(Assignment assignment) {
+        new deleteAsyncTask(mDao).execute(assignment);
+    }
+
+    private class deleteAsyncTask extends AsyncTask<Assignment, Void, Void> {
+
+        private Dao mDao;
+        deleteAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Assignment... Assigments) {
+            mDao.delete(Assigments[0]);
+            return null;
+        }
+    }
 
     private class getPredecessorByNameAsyncTask extends AsyncTask<String, Void, List<String>> {
 

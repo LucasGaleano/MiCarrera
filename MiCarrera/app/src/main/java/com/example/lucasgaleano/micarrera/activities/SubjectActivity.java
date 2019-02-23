@@ -11,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -25,6 +27,7 @@ import com.example.lucasgaleano.micarrera.database.teacher;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
@@ -60,9 +63,7 @@ public class SubjectActivity extends AppCompatActivity {
         listaProfesores = findViewById(R.id.listaProfesores);
         listaExamenes = findViewById(R.id.listaExamenes);
 
-        listaExamenes.setOnClicks(onClickItemExam);
-        listaProfesores.setOnClicks(onClickItemProfesores);
-        listaTareas.setOnClicks(onClickItemTareas);
+
 
 
 
@@ -80,7 +81,7 @@ public class SubjectActivity extends AppCompatActivity {
                     sub.setState(getResources().getInteger(R.integer.APROBADA));
                 else
                     sub.setState(getResources().getInteger(R.integer.HABILITADA));
-                repo.updateSubject(sub);
+                repo.update(sub);
 
             }
         });
@@ -112,8 +113,15 @@ public class SubjectActivity extends AppCompatActivity {
 
         listaTareas.setHeader("Tareas");
         listaTareas.setAddClick(onClickAddItem);
+        listaTareas.setOnClicks(onClickItemTareas);
+        listaTareas.setOnLongCLicks(onLongClickItemTareas);
+
+
         listaProfesores.setHeader("Profesores");
+        listaProfesores.setOnClicks(onClickItemProfesores);
+
         listaExamenes.setHeader("Examenes");
+        listaExamenes.setOnClicks(onClickItemExam);
 
     }
 
@@ -145,7 +153,27 @@ public class SubjectActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(Nav.getListener());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.item_menu_delete) {
+            return true;//
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     View.OnClickListener onClickItemExam = new View.OnClickListener() {
         @Override
@@ -181,12 +209,21 @@ public class SubjectActivity extends AppCompatActivity {
         }
     };
 
+    View.OnLongClickListener onLongClickItemTareas = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            Assignment aux = (Assignment) ((ItemListaView)view).getItem();
+            repo.delete(aux);
+            return true;
+        }
+    };
+
     View.OnClickListener onClickAddItem = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intentAdditem;
-            intentAdditem = new Intent(v.getContext(),AssignmentInfoActivity.class);
-            startActivity(intentAdditem);
+            Assignment newAssignment = new Assignment(Calendar.getInstance(), subjectName, "Cosas\nMuchas cosas\nMuchas otras cosas mas", "nueva tarea", "", "", 0);
+            repo.update(newAssignment);
+
         }
     };
 

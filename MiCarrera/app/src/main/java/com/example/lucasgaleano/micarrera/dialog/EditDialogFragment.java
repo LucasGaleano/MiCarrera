@@ -40,6 +40,7 @@ public class EditDialogFragment extends DialogFragment {
                 }
 
                    self.repo.update(self.assignment);
+
                    self.recreate();
                 dismiss();
             }

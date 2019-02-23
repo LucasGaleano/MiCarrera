@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -37,11 +40,18 @@ public class AssignmentInfoActivity extends AppCompatActivity{
         int id = intent.getIntExtra(SubjectActivity.EXTRA_ID, -1);
 
         repo = new Repository(getApplication());
+        Log.d("Trace","id de la asssigment: " + id);
         if(id == -1) {
+            Log.d("Trace","No existe assigments, creando uno");
             assignment = new Assignment(Calendar.getInstance(), "prueba", "", "blah blah blah", "", "", 0);
+            Log.d("Trace","assigment creado");
+            Log.d("Trace","id de la asssigment: " + assignment.getId_assignment());
+
         }
         else {
             assignment = repo.getAssigmentById(id);
+            Log.d("Trace","id de la asssigment: " + id);
+
         }
         titleTxt = findViewById(R.id.title);
         dateTxt = findViewById(R.id.date);
@@ -74,6 +84,7 @@ public class AssignmentInfoActivity extends AppCompatActivity{
             args.putString("EXTRA_CONTENT", texto.getText().toString());
             dialog.setArguments(args);
             dialog.show(getSupportFragmentManager(),"Choose");
+
         }
     };
 
@@ -104,5 +115,35 @@ public class AssignmentInfoActivity extends AppCompatActivity{
                     assignment.getDate().get(Calendar.DAY_OF_MONTH)).show();
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_assignment, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.item_menu_delete) {
+
+            deleteAssignment(this.assignment);
+            this.finish();
+            return true;//
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAssignment(Assignment assignment) {
+        this.repo.delete(assignment);
+    }
+
 
 }

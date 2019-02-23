@@ -31,6 +31,7 @@ public class ListaView extends LinearLayout {
     private String titulo;
     private OnClickListener onClick;
     private OnClickListener addClick;
+    private OnLongClickListener onLongClick;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ListaView(Context context) {
@@ -98,6 +99,7 @@ public class ListaView extends LinearLayout {
         lItem.setTextSize(SizeLetra * (float) 0.8);
         lItem.setPadding((int) SizeLetra * 2, 5, 5, 5);
         lItem.setOnClickListener(this.onClick);
+        lItem.setOnLongClickListener(this.onLongClick);
         lItem.additem(item);
         this.addView(lItem);
         this.setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.header, null));
@@ -134,6 +136,9 @@ public class ListaView extends LinearLayout {
 
     public void setOnClicks(OnClickListener onClicks) {
         this.onClick = onClicks;
+    }
+    public void setOnLongCLicks(OnLongClickListener onClicks) {
+        this.onLongClick = onClicks;
     }
 
     public void setAddClick(OnClickListener onClicks){

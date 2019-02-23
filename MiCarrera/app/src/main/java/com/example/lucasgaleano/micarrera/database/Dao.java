@@ -1,6 +1,7 @@
 package com.example.lucasgaleano.micarrera.database;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
@@ -80,7 +81,8 @@ public interface Dao {
     @Query("SELECT * FROM assignment_table")
     LiveData<List<Assignment>> getAllAssigment();
 
-
+    @Delete
+    void delete(Assignment... assignments);
 }
 
 

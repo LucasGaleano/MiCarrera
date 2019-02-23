@@ -31,11 +31,11 @@ public class SubjectTreeModel extends AndroidViewModel {
     }
 
     public void updateSubject(String name, int level, int position, int state){
-        mRepository.updateSubject(new Subject(name,state,level,position));
+        mRepository.update(new Subject(name,state,level,position));
     }
 
     public void updateSubject(String name,int state){
-        mRepository.updateSubject(new Subject(name,state,0,0));
+        mRepository.update(new Subject(name,state,0,0));
     }
 
     private Subject getSubjectByName(String name) {
