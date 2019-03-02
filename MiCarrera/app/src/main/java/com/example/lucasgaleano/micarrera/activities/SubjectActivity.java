@@ -27,7 +27,6 @@ import com.example.lucasgaleano.micarrera.database.teacher;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
@@ -56,16 +55,11 @@ public class SubjectActivity extends AppCompatActivity {
         subjectState = intent.getIntExtra(TreeActivity.EXTRA_STATE_SUBJECT,-1);
         subjectName = intent.getStringExtra(TreeActivity.EXTRA_NAME_SUBJECT);
 
-        sub = new Subject(subjectName,
-                subjectState,0,0);
+        sub = new Subject(subjectName, subjectState,0,0);
 
         listaTareas = findViewById(R.id.listaTareas);
         listaProfesores = findViewById(R.id.listaProfesores);
         listaExamenes = findViewById(R.id.listaExamenes);
-
-
-
-
 
         this.setTitle(subjectName);
         setSwichts();
@@ -128,13 +122,7 @@ public class SubjectActivity extends AppCompatActivity {
     private void setSwichts() {
 
         switchAprobada = findViewById(R.id.switchAprobada);
-        if(sub.getState() != getResources().getInteger(R.integer.APROBADA))
-            switchAprobada.setChecked(false);
-        else
-            switchAprobada.setChecked(true);
-
-
-
+        switchAprobada.setChecked(sub.estasAprobada());
     }
 
     private void initNavigationAndToolbar() {
@@ -181,7 +169,7 @@ public class SubjectActivity extends AppCompatActivity {
             Intent intentExam;
             intentExam = new Intent(v.getContext(),ExamInfoActivity.class);
             Exam aux = (Exam) ((ItemListaView)v).getItem();
-            intentExam.putExtra(EXTRA_ID,aux.getId_exam());
+            intentExam.putExtra(EXTRA_ID,aux.getId());
             startActivity(intentExam);
         }
     };
@@ -192,7 +180,7 @@ public class SubjectActivity extends AppCompatActivity {
             Intent intentProfesores;
             intentProfesores = new Intent(v.getContext(),TeacherInfoActivity.class);
             teacher aux = (teacher) ((ItemListaView)v).getItem();
-            intentProfesores.putExtra(EXTRA_ID,aux.getId_teacher());
+            intentProfesores.putExtra(EXTRA_ID,aux.getId());
             startActivity(intentProfesores);
         }
     };
@@ -203,7 +191,7 @@ public class SubjectActivity extends AppCompatActivity {
             Intent intentTareas;
             intentTareas= new Intent(v.getContext(),AssignmentInfoActivity.class);
             Assignment aux = (Assignment) ((ItemListaView)v).getItem();
-            intentTareas.putExtra(EXTRA_ID,aux.getId_assignment());
+            intentTareas.putExtra(EXTRA_ID,aux.getId());
             startActivity(intentTareas);
 
         }
@@ -221,7 +209,7 @@ public class SubjectActivity extends AppCompatActivity {
     View.OnClickListener onClickAddItem = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Assignment newAssignment = new Assignment(Calendar.getInstance(), subjectName, "Cosas\nMuchas cosas\nMuchas otras cosas mas", "nueva tarea", "", "", 0);
+            Assignment newAssignment = new Assignment(subjectName);
             repo.update(newAssignment);
 
         }

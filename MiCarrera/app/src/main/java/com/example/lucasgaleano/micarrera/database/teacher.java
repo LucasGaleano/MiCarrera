@@ -14,19 +14,19 @@ public class teacher {
     public static final int JC = 3; //jefe de catedra
 
     @PrimaryKey(autoGenerate = true)
-    private int id_teacher;
+    private int id;
     private String name;
     private String Subject;
     private int Type;
     private String email;
     private String webSite;
 
-    public int getId_teacher() {
-        return id_teacher;
+    public int getId() {
+        return id;
     }
 
-    public void setId_teacher(int id_teacher) {
-        this.id_teacher = id_teacher;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

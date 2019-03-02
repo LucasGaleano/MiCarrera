@@ -16,7 +16,7 @@ public class Assignment{
     public static final int TERMINADA = 1;
 
     @PrimaryKey(autoGenerate= true)
-    private int id_assignment;
+    private int id;
     @NonNull
     private Calendar date;
     private String subject;
@@ -26,6 +26,17 @@ public class Assignment{
     private String photo;
     private String Audio;
     private int state;
+
+    @Ignore
+    public Assignment (String subject){
+        this.date = Calendar.getInstance();
+        this.title = "nueva tarea";
+        this.subject = subject;
+        this.description = "Cosas\nMuchas cosas\nMuchas otras cosas mas";
+        this.photo="";
+        this.Audio="";
+        this.state=0;
+    }
 
     public Assignment(Calendar date,String subject,String description,String title, String photo, String Audio, int state ) {
         this.date = date;
@@ -37,12 +48,12 @@ public class Assignment{
         this.state=state;
     }
 
-    public int getId_assignment() {
-        return id_assignment;
+    public int getId() {
+        return id;
     }
 
-    public void setId_assignment(int id_assignment) {
-        this.id_assignment = id_assignment;
+    public void setId(int id_assignment) {
+        this.id = id_assignment;
     }
 
     public Calendar getDate() {
@@ -51,6 +62,11 @@ public class Assignment{
 
     public void setDate(Calendar date) {
         this.date = date;
+    }
+
+    @Ignore
+    public void setDate(int year, int month, int day) {
+        this.date.set(year,month,day);
     }
 
     public String getSubject() {
@@ -116,4 +132,13 @@ public class Assignment{
     public String toString() {
         return this.title;
     }
+
+    @Ignore
+    public int getyear(){ return this.getDate().get(Calendar.YEAR);}
+
+    @Ignore
+    public int getmonth(){ return this.getDate().get(Calendar.MONTH);}
+
+    @Ignore
+    public int getday(){ return this.getDate().get(Calendar.DAY_OF_MONTH);}
 }
