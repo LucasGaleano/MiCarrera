@@ -3,9 +3,12 @@ package com.example.lucasgaleano.micarrera.activities;
 import android.annotation.TargetApi;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 
 import com.example.lucasgaleano.micarrera.R;
@@ -40,8 +44,8 @@ public class SubjectActivity extends AppCompatActivity {
     private ListaView listaTareas, listaProfesores, listaExamenes;
     private DrawerLayout drawer;
     public static final String EXTRA_ID = "com.example.lucasgaleano.micarrera.extra.ID";
-
-
+    public FloatingActionButton fab_action;
+    public ImageView foto;
 
 
     @Override
@@ -52,7 +56,7 @@ public class SubjectActivity extends AppCompatActivity {
         initNavigationAndToolbar();
 
         repo = new Repository(getApplication());
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         subjectState = intent.getIntExtra(TreeActivity.EXTRA_STATE_SUBJECT,-1);
         subjectName = intent.getStringExtra(TreeActivity.EXTRA_NAME_SUBJECT);
 
@@ -63,15 +67,20 @@ public class SubjectActivity extends AppCompatActivity {
         listaProfesores = findViewById(R.id.listaProfesores);
         listaExamenes = findViewById(R.id.listaExamenes);
 
-
-
-
-
         this.setTitle(subjectName);
         setSwichts();
         setListas();
 
+        fab_action = findViewById(R.id.fab);
+        foto = (ImageView)findViewById(R.id.camara);
 
+        fab_action.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            Intent intent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent,0);
+            }
+        });
 
         switchAprobada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -109,6 +118,7 @@ public class SubjectActivity extends AppCompatActivity {
 
     }
 
+
     private void setListas() {
 
         listaTareas.setHeader("Tareas");
@@ -132,7 +142,6 @@ public class SubjectActivity extends AppCompatActivity {
             switchAprobada.setChecked(false);
         else
             switchAprobada.setChecked(true);
-
 
 
     }
@@ -226,5 +235,13 @@ public class SubjectActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultcode, Intent data){
+        super.onActivityResult(requestCode,resultcode,data);
+        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+        foto.setImageBitmap(bitmap);
+
+    }
 
 }
