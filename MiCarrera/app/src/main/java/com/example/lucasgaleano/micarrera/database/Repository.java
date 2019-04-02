@@ -68,8 +68,8 @@ public class Repository {
         }
 
         @Override
-        protected Void doInBackground(Assignment... Assigments) {
-            mDao.delete(Assigments[0]);
+        protected Void doInBackground(Assignment... assignments) {
+            mDao.delete(assignments[0]);
             return null;
         }
     }
@@ -221,7 +221,7 @@ public class Repository {
 
         @Override
         protected Void doInBackground(Assignment... assignments) {
-            Assignment assigment = mDao.getAssigmentsById(assignments[0].getId_assignment());
+            Assignment assigment = mDao.getAssigmentsById(assignments[0].getId());
             if(assigment == null)
                 mDao.insert(assignments[0]);
             else

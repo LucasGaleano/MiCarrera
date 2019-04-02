@@ -93,7 +93,7 @@ public class TreeActivity extends AppCompatActivity{
             SubjectView sub = (SubjectView) v;
             intentSubjectActivity.putExtra(EXTRA_NAME_SUBJECT, sub.getText().toString());
             intentSubjectActivity.putExtra(EXTRA_STATE_SUBJECT, sub.getState());
-            if(sub.getState() == getResources().getInteger(R.integer.HABILITADA)){
+            if(sub.estasHabilitado()){
                 DialogFragment dialog = new SubjectDialogFragment();
                 Bundle args = new Bundle();
                 args.putString("SubjectName",sub.getText().toString());

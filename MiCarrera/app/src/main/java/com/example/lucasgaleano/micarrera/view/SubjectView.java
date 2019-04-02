@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 
 import com.example.lucasgaleano.micarrera.R;
+import com.example.lucasgaleano.micarrera.database.Subject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -98,4 +99,7 @@ public class SubjectView extends android.support.v7.widget.AppCompatTextView {
         this.position = position;
     }
 
+    public boolean estasHabilitado() {
+        return this.state == Subject.HABILITADA;
+    }
 }

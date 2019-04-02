@@ -35,7 +35,7 @@ public class Exam {
 
 
     @PrimaryKey(autoGenerate = true)
-    private int id_exam;
+    private int id;
     private String subject;
     private Calendar date;
     private int type;
@@ -51,12 +51,12 @@ public class Exam {
         this.setDescription(description);
     }
 
-    public int getId_exam() {
-        return id_exam;
+    public int getId() {
+        return id;
     }
 
-    public void setId_exam(int id_exam) {
-        this.id_exam = id_exam;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSubject() {

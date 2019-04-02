@@ -29,40 +29,26 @@ public class AssignmentInfoActivity extends AppCompatActivity{
     private TextView descriptionTxt;
     public Assignment assignment;
     public Repository repo;
-    public Calendar myCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment_info);
 
-        Intent intent = getIntent();
-        int id = intent.getIntExtra(SubjectActivity.EXTRA_ID, -1);
+        int id = getIntent().getIntExtra(SubjectActivity.EXTRA_ID, -1);
 
         repo = new Repository(getApplication());
-        Log.d("Trace","id de la asssigment: " + id);
-        if(id == -1) {
-            Log.d("Trace","No existe assigments, creando uno");
-            assignment = new Assignment(Calendar.getInstance(), "prueba", "", "blah blah blah", "", "", 0);
-            Log.d("Trace","assigment creado");
-            Log.d("Trace","id de la asssigment: " + assignment.getId_assignment());
 
-        }
-        else {
-            assignment = repo.getAssigmentById(id);
-            Log.d("Trace","id de la asssigment: " + id);
-
-        }
-        titleTxt = findViewById(R.id.title);
-        dateTxt = findViewById(R.id.date);
-        descriptionTxt = findViewById(R.id.description);
+        assignment = repo.getAssigmentById(id);
 
         updateData(assignment);
-
-        final Calendar myCalendar = Calendar.getInstance();
     }
 
     private void updateData(Assignment assignment) {
+
+        titleTxt = findViewById(R.id.title);
+        dateTxt = findViewById(R.id.date);
+        descriptionTxt = findViewById(R.id.description);
 
         titleTxt.setText(assignment.getTitle());
         dateTxt.setText(Calendario.formatDate(assignment.getDate()));
@@ -93,11 +79,7 @@ public class AssignmentInfoActivity extends AppCompatActivity{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            Calendar aux = Calendar.getInstance();
-            aux.set(Calendar.YEAR,year);
-            aux.set(Calendar.MONTH,monthOfYear);
-            aux.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-            assignment.setDate(aux);
+            assignment.setDate(year,monthOfYear,dayOfMonth);
             repo.update(assignment);
             recreate();
         }
@@ -110,9 +92,9 @@ public class AssignmentInfoActivity extends AppCompatActivity{
         @Override
         public void onClick(View view) {
 
-            new DatePickerDialog(AssignmentInfoActivity.this, date, assignment.getDate().get(Calendar.YEAR),
-                    assignment.getDate().get(Calendar.MONTH),
-                    assignment.getDate().get(Calendar.DAY_OF_MONTH)).show();
+            new DatePickerDialog(AssignmentInfoActivity.this, date, assignment.getyear(),
+                    assignment.getmonth(),
+                    assignment.getday()).show();
         }
     };
 
@@ -135,7 +117,7 @@ public class AssignmentInfoActivity extends AppCompatActivity{
 
             deleteAssignment(this.assignment);
             this.finish();
-            return true;//
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
