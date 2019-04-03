@@ -4,8 +4,11 @@ import android.annotation.TargetApi;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -31,6 +34,7 @@ import com.example.lucasgaleano.micarrera.database.teacher;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
+import java.io.File;
 import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
@@ -45,7 +49,10 @@ public class SubjectActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "com.example.lucasgaleano.micarrera.extra.ID";
     public FloatingActionButton fab_action;
     public ImageView foto;
-
+    public Bitmap bitmap;
+    public File file;
+    public String pictureImagePath = "";
+    public Uri outputFileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +63,10 @@ public class SubjectActivity extends AppCompatActivity {
 
         repo = new Repository(getApplication());
         final Intent intent = getIntent();
-        subjectState = intent.getIntExtra(TreeActivity.EXTRA_STATE_SUBJECT,-1);
+        subjectState = intent.getIntExtra(TreeActivity.EXTRA_STATE_SUBJECT, -1);
         subjectName = intent.getStringExtra(TreeActivity.EXTRA_NAME_SUBJECT);
 
-        sub = new Subject(subjectName, subjectState,0,0);
+        sub = new Subject(subjectName, subjectState, 0, 0);
 
         listaTareas = findViewById(R.id.listaTareas);
         listaProfesores = findViewById(R.id.listaProfesores);
@@ -70,13 +77,19 @@ public class SubjectActivity extends AppCompatActivity {
         setListas();
 
         fab_action = findViewById(R.id.fab);
-        foto = (ImageView)findViewById(R.id.camara);
+        foto = findViewById(R.id.camara);
 
         fab_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Intent intent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent,0);
+                File storageDir = Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_PICTURES);
+                pictureImagePath = storageDir.getAbsolutePath() + "/" + subjectName+".jpg";
+                file = new File(pictureImagePath);
+                outputFileUri = Uri.fromFile(file);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -84,7 +97,7 @@ public class SubjectActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-                if(b)
+                if (b)
                     sub.setState(getResources().getInteger(R.integer.APROBADA));
                 else
                     sub.setState(getResources().getInteger(R.integer.HABILITADA));
@@ -94,13 +107,13 @@ public class SubjectActivity extends AppCompatActivity {
         });
 
         repo.getExamsBySubject(subjectName).observe(this, new Observer<List<Exam>>() {
-                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                    @Override
-                    public void onChanged(final List<Exam> exams) {
-                    listaExamenes.update(exams);
-                    }
-                });
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onChanged(final List<Exam> exams) {
+                listaExamenes.update(exams);
+            }
+        });
 
 
         repo.getAllAssigments().observe(this, new Observer<List<Assignment>>() {
@@ -111,7 +124,6 @@ public class SubjectActivity extends AppCompatActivity {
                 listaTareas.update(assignments);
             }
         });
-
 
 
     }
@@ -137,7 +149,7 @@ public class SubjectActivity extends AppCompatActivity {
 
         switchAprobada = findViewById(R.id.switchAprobada);
 
-        if(sub.getState() != getResources().getInteger(R.integer.APROBADA))
+        if (sub.getState() != getResources().getInteger(R.integer.APROBADA))
             switchAprobada.setChecked(false);
         else
             switchAprobada.setChecked(true);
@@ -157,7 +169,7 @@ public class SubjectActivity extends AppCompatActivity {
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        NavigationMenu Nav = new NavigationMenu(this,drawer);
+        NavigationMenu Nav = new NavigationMenu(this, drawer);
         navigationView.setNavigationItemSelectedListener(Nav.getListener());
     }
 
@@ -187,9 +199,9 @@ public class SubjectActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intentExam;
-            intentExam = new Intent(v.getContext(),ExamInfoActivity.class);
-            Exam aux = (Exam) ((ItemListaView)v).getItem();
-            intentExam.putExtra(EXTRA_ID,aux.getId());
+            intentExam = new Intent(v.getContext(), ExamInfoActivity.class);
+            Exam aux = (Exam) ((ItemListaView) v).getItem();
+            intentExam.putExtra(EXTRA_ID, aux.getId());
             startActivity(intentExam);
         }
     };
@@ -198,9 +210,9 @@ public class SubjectActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intentProfesores;
-            intentProfesores = new Intent(v.getContext(),TeacherInfoActivity.class);
-            teacher aux = (teacher) ((ItemListaView)v).getItem();
-            intentProfesores.putExtra(EXTRA_ID,aux.getId());
+            intentProfesores = new Intent(v.getContext(), TeacherInfoActivity.class);
+            teacher aux = (teacher) ((ItemListaView) v).getItem();
+            intentProfesores.putExtra(EXTRA_ID, aux.getId());
             startActivity(intentProfesores);
         }
     };
@@ -209,9 +221,9 @@ public class SubjectActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intentTareas;
-            intentTareas= new Intent(v.getContext(),AssignmentInfoActivity.class);
-            Assignment aux = (Assignment) ((ItemListaView)v).getItem();
-            intentTareas.putExtra(EXTRA_ID,aux.getId());
+            intentTareas = new Intent(v.getContext(), AssignmentInfoActivity.class);
+            Assignment aux = (Assignment) ((ItemListaView) v).getItem();
+            intentTareas.putExtra(EXTRA_ID, aux.getId());
             startActivity(intentTareas);
 
         }
@@ -220,7 +232,7 @@ public class SubjectActivity extends AppCompatActivity {
     View.OnLongClickListener onLongClickItemTareas = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View view) {
-            Assignment aux = (Assignment) ((ItemListaView)view).getItem();
+            Assignment aux = (Assignment) ((ItemListaView) view).getItem();
             repo.delete(aux);
             return true;
         }
@@ -236,11 +248,16 @@ public class SubjectActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onActivityResult (int requestCode, int resultcode, Intent data){
-        super.onActivityResult(requestCode,resultcode,data);
-        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-        foto.setImageBitmap(bitmap);
+    protected void onActivityResult(int requestCode, int resultcode, Intent data) {
+        super.onActivityResult(requestCode, resultcode, data);
 
+        Bitmap d = new BitmapDrawable(this.getResources() , file.getAbsolutePath()).getBitmap();
+        int nh = (int) ( d.getHeight() * (512.0 / d.getWidth()) );
+        Bitmap scaled = Bitmap.createScaledBitmap(d, 512, nh, true);
+        foto.setImageBitmap(scaled);
     }
-
 }
+
+
+
+
