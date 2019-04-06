@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lucasgaleano.micarrera.R;
-import com.example.lucasgaleano.micarrera.classes.ItemListaView;
 
 import java.util.List;
 

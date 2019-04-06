@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 
 import com.example.lucasgaleano.micarrera.R;
-import com.example.lucasgaleano.micarrera.classes.ItemListaView;
+import com.example.lucasgaleano.micarrera.view.ItemListaView;
 import com.example.lucasgaleano.micarrera.database.Assignment;
 import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
@@ -39,20 +39,18 @@ import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
 
-    private Switch switchAprobada;
+
     private String subjectName;
     private Repository repo;
-    private Subject sub;
-    private int subjectState;
     private ListaView listaTareas, listaProfesores, listaExamenes;
     private DrawerLayout drawer;
     public static final String EXTRA_ID = "com.example.lucasgaleano.micarrera.extra.ID";
     public FloatingActionButton fab_action;
     public ImageView foto;
-    public Bitmap bitmap;
     public File file;
     public String pictureImagePath = "";
     public Uri outputFileUri;
+    private Subject subject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,21 +61,18 @@ public class SubjectActivity extends AppCompatActivity {
 
         repo = new Repository(getApplication());
         final Intent intent = getIntent();
-        subjectState = intent.getIntExtra(TreeActivity.EXTRA_STATE_SUBJECT, -1);
         subjectName = intent.getStringExtra(TreeActivity.EXTRA_NAME_SUBJECT);
 
-        sub = new Subject(subjectName, subjectState, 0, 0);
+        this.subject = repo.getSubjectByName(subjectName);
 
         listaTareas = findViewById(R.id.listaTareas);
         listaProfesores = findViewById(R.id.listaProfesores);
         listaExamenes = findViewById(R.id.listaExamenes);
 
         this.setTitle(subjectName);
-        setSwichts();
         setListas();
 
         fab_action = findViewById(R.id.fab);
-        foto = findViewById(R.id.camara);
 
         fab_action.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,19 +85,6 @@ public class SubjectActivity extends AppCompatActivity {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
                 startActivityForResult(intent, 0);
-            }
-        });
-
-        switchAprobada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if (b)
-                    sub.setState(getResources().getInteger(R.integer.APROBADA));
-                else
-                    sub.setState(getResources().getInteger(R.integer.HABILITADA));
-                repo.update(sub);
-
             }
         });
 
@@ -145,18 +127,6 @@ public class SubjectActivity extends AppCompatActivity {
 
     }
 
-    private void setSwichts() {
-
-        switchAprobada = findViewById(R.id.switchAprobada);
-
-        if (sub.getState() != getResources().getInteger(R.integer.APROBADA))
-            switchAprobada.setChecked(false);
-        else
-            switchAprobada.setChecked(true);
-        //switchAprobada.setChecked(sub.estasAprobada());
-
-    }
-
     private void initNavigationAndToolbar() {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -176,7 +146,7 @@ public class SubjectActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_subject, menu);
         return true;
     }
 
@@ -188,9 +158,15 @@ public class SubjectActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.item_menu_delete) {
-            return true;//
+        if (id == R.id.action_dejarCursar) {
+            this.subject.setState(Subject.HABILITADA);
         }
+        if (id == R.id.action_aprobada) {
+            this.subject.setState(Subject.APROBADA);
+        }
+
+        this.repo.update(this.subject);
+        this.onBackPressed();
 
         return super.onOptionsItemSelected(item);
     }

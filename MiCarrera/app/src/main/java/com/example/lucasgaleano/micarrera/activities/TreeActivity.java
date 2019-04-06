@@ -92,7 +92,6 @@ public class TreeActivity extends AppCompatActivity{
         public void onClick(View v) {
             SubjectView sub = (SubjectView) v;
             intentSubjectActivity.putExtra(EXTRA_NAME_SUBJECT, sub.getText().toString());
-            intentSubjectActivity.putExtra(EXTRA_STATE_SUBJECT, sub.getState());
             if(sub.estasHabilitado()){
                 DialogFragment dialog = new SubjectDialogFragment();
                 Bundle args = new Bundle();

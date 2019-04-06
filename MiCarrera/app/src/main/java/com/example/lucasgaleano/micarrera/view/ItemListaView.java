@@ -1,4 +1,4 @@
-package com.example.lucasgaleano.micarrera.classes;
+package com.example.lucasgaleano.micarrera.view;
 
 import android.content.Context;
 import android.os.Build;
