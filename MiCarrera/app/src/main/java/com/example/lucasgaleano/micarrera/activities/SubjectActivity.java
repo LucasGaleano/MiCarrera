@@ -1,8 +1,10 @@
 package com.example.lucasgaleano.micarrera.activities;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -13,6 +15,8 @@ import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,22 +24,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 
 import com.example.lucasgaleano.micarrera.R;
-import com.example.lucasgaleano.micarrera.view.ItemListaView;
 import com.example.lucasgaleano.micarrera.database.Assignment;
 import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
 import com.example.lucasgaleano.micarrera.database.teacher;
+import com.example.lucasgaleano.micarrera.view.ItemListaView;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
 
 import java.io.File;
 import java.util.List;
+import java.util.Random;
 
 public class SubjectActivity extends AppCompatActivity {
 
@@ -51,6 +54,7 @@ public class SubjectActivity extends AppCompatActivity {
     public String pictureImagePath = "";
     public Uri outputFileUri;
     private Subject subject;
+    public Bitmap d,scaled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,18 +77,38 @@ public class SubjectActivity extends AppCompatActivity {
         setListas();
 
         fab_action = findViewById(R.id.fab);
+        foto = findViewById(R.id.camara);
 
         fab_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 File storageDir = Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_PICTURES);
-                pictureImagePath = storageDir.getAbsolutePath() + "/" + subjectName+".jpg";
-                file = new File(pictureImagePath);
-                outputFileUri = Uri.fromFile(file);
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-                startActivityForResult(intent, 0);
+                Random generator = new Random();
+                int n = 10000;
+                n = generator.nextInt(n);
+                pictureImagePath = storageDir.getAbsolutePath() + "/" + subjectName +"-"+ n +".jpg";
+
+                if (ContextCompat.checkSelfPermission(SubjectActivity.this,
+                        Manifest.permission.READ_CONTACTS)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(SubjectActivity.this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+                    } else {
+                        // No explanation needed; request the permission
+                        ActivityCompat.requestPermissions(SubjectActivity.this,
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                1);
+                    }
+                } else {
+
+                }
+
+
             }
         });
 
@@ -227,10 +251,35 @@ public class SubjectActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultcode, Intent data) {
         super.onActivityResult(requestCode, resultcode, data);
 
-        Bitmap d = new BitmapDrawable(this.getResources() , file.getAbsolutePath()).getBitmap();
+        d = new BitmapDrawable(this.getResources(), file.getAbsolutePath()).getBitmap();
         int nh = (int) ( d.getHeight() * (512.0 / d.getWidth()) );
-        Bitmap scaled = Bitmap.createScaledBitmap(d, 512, nh, true);
+        scaled = Bitmap.createScaledBitmap(d, 512, nh, true);
         foto.setImageBitmap(scaled);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    file = new File(pictureImagePath);
+                    outputFileUri = Uri.fromFile(file);
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                    startActivityForResult(intent, 0);
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 }
 
