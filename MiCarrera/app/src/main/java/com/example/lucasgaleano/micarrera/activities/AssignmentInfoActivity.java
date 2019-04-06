@@ -1,13 +1,11 @@
 package com.example.lucasgaleano.micarrera.activities;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +16,7 @@ import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.classes.Calendario;
 import com.example.lucasgaleano.micarrera.database.Assignment;
 import com.example.lucasgaleano.micarrera.database.Repository;
-import com.example.lucasgaleano.micarrera.dialog.EditDialogFragment;
-
-import java.util.Calendar;
+import com.example.lucasgaleano.micarrera.dialog.EditAssigmentDialogFragment;
 
 public class AssignmentInfoActivity extends AppCompatActivity{
 
@@ -38,9 +34,7 @@ public class AssignmentInfoActivity extends AppCompatActivity{
         int id = getIntent().getIntExtra(SubjectActivity.EXTRA_ID, -1);
 
         repo = new Repository(getApplication());
-
         assignment = repo.getAssigmentById(id);
-
         updateData(assignment);
     }
 
@@ -64,7 +58,7 @@ public class AssignmentInfoActivity extends AppCompatActivity{
         @Override
         public void onClick(View v) {
             TextView texto = (TextView) v;
-            DialogFragment dialog = new EditDialogFragment();
+            DialogFragment dialog = new EditAssigmentDialogFragment();
             Bundle args = new Bundle();
             args.putString("EXTRA_TITLE", texto.getResources().getResourceEntryName(texto.getId()));
             args.putString("EXTRA_CONTENT", texto.getText().toString());

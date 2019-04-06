@@ -75,6 +75,11 @@ public class Exam {
         this.date = date;
     }
 
+    @Ignore
+    public void setDate(int year, int month, int day) {
+        this.date.set(year,month,day);
+    }
+
     public int getType() {
         return type;
     }
@@ -141,4 +146,17 @@ public class Exam {
         return this.get(this.type) +" "+ Calendario.formatDate(this.getDate());
     }
 
+    @Ignore
+    public int getyear(){ return this.getDate().get(Calendar.YEAR);}
+
+    @Ignore
+    public int getmonth(){ return this.getDate().get(Calendar.MONTH);}
+
+    @Ignore
+    public int getday(){ return this.getDate().get(Calendar.DAY_OF_MONTH);}
+
+    @Ignore
+    public String title() {
+        return this.getSubject().concat( Exam.get(this.getType()));
+    }
 }

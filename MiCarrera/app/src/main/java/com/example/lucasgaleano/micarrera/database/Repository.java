@@ -56,24 +56,6 @@ public class Repository {
         return null;
     }
 
-    public void delete(Assignment assignment) {
-        new deleteAsyncTask(mDao).execute(assignment);
-    }
-
-    private class deleteAsyncTask extends AsyncTask<Assignment, Void, Void> {
-
-        private Dao mDao;
-        deleteAsyncTask(Dao dao) {
-            mDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(Assignment... assignments) {
-            mDao.delete(assignments[0]);
-            return null;
-        }
-    }
-
     private class getPredecessorByNameAsyncTask extends AsyncTask<String, Void, List<String>> {
 
         private Dao mDao;
@@ -197,12 +179,53 @@ public class Repository {
         }
     }
 
+    public void update(Exam exam) {
+        new updateExamAsyncTask(mDao).execute(exam);
+    }
+
+    private class updateExamAsyncTask extends AsyncTask<Exam, Void, Void> {
+
+        private Dao mDao;
+
+        updateExamAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Exam... exams) {
+            Exam exam = mDao.getExamsById(exams[0].getId());
+            if(exam == null)
+                mDao.insert(exams[0]);
+            else
+                mDao.update(exams[0]);
+            return null;
+        }
+    }
+
+    public void delete(Exam exam) {
+        new deleteExamAsyncTask(mDao).execute(exam);
+    }
+
+    private class deleteExamAsyncTask extends AsyncTask<Exam, Void, Void> {
+
+        private Dao mDao;
+        deleteExamAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Exam... exams) {
+            mDao.delete(exams[0]);
+            return null;
+        }
+    }
+
 
     //------Assignment----------------------------------------
 
     public void update(Assignment assignment){
         try {
-            new updateAsyncTask(mDao).execute(assignment).get();
+            new updateAssignmentAsyncTask(mDao).execute(assignment).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -210,12 +233,12 @@ public class Repository {
         }
     }
 
-    private class updateAsyncTask extends AsyncTask<Assignment, Void, Void> {
+    private class updateAssignmentAsyncTask extends AsyncTask<Assignment, Void, Void> {
 
         private Dao mDao;
 
 
-        updateAsyncTask(Dao dao) {
+        updateAssignmentAsyncTask(Dao dao) {
             mDao = dao;
         }
 
@@ -279,6 +302,24 @@ public class Repository {
         @Override
         protected LiveData<List<Assignment>> doInBackground(String... strings) {
             return dao.getAssigmentsBySubject(strings[0]);
+        }
+    }
+
+    public void delete(Assignment assignment) {
+        new deleteAssignmentAsyncTask(mDao).execute(assignment);
+    }
+
+    private class deleteAssignmentAsyncTask extends AsyncTask<Assignment, Void, Void> {
+
+        private Dao mDao;
+        deleteAssignmentAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Assignment... assignments) {
+            mDao.delete(assignments[0]);
+            return null;
         }
     }
 

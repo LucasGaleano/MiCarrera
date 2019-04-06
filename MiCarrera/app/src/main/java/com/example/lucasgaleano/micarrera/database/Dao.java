@@ -37,7 +37,10 @@ public interface Dao {
     void insert(Subject... subjects);
 
     @Update
-    void update(Subject... subject);
+    void update(Subject... subjects);
+
+    @Delete
+    void delete(Subject... subjects);
 
     //------Exam----------------------------------------
 
@@ -61,6 +64,9 @@ public interface Dao {
 
     @Update
     void update(Exam... exams);
+
+    @Delete
+    void delete(Exam Exams);
 
     //------Assignment----------------------------------------
 

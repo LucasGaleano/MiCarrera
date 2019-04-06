@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 import com.example.lucasgaleano.micarrera.activities.AssignmentInfoActivity;
 
-public class EditDialogFragment extends DialogFragment {
+public class EditAssigmentDialogFragment extends DialogFragment {
     private String title;
     private String content;
     Bundle argument;
