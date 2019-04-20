@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.example.lucasgaleano.micarrera.R;
@@ -35,6 +36,7 @@ import com.example.lucasgaleano.micarrera.database.teacher;
 import com.example.lucasgaleano.micarrera.view.ItemListaView;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
+import com.example.lucasgaleano.micarrera.view.fotos_adapter;
 
 import java.io.File;
 import java.util.List;
@@ -61,6 +63,11 @@ public class SubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
 
+        GridView gridView;
+        String[] letters = new String[] {
+                //"/AyED-4136.jpg", "/AyED-3607.jpg", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+                 "Z"};
+
         initNavigationAndToolbar();
 
         repo = new Repository(getApplication());
@@ -78,6 +85,9 @@ public class SubjectActivity extends AppCompatActivity {
 
         fab_action = findViewById(R.id.fab);
         foto = findViewById(R.id.camara);
+
+        gridView = (GridView) findViewById(R.id.baseGridView);
+        gridView.setAdapter(new fotos_adapter(this, letters));
 
         fab_action.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -281,6 +291,8 @@ public class SubjectActivity extends AppCompatActivity {
             // permissions this app might request.
         }
     }
+
+
 }
 
 
