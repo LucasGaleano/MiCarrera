@@ -30,12 +30,14 @@ public class Subject {
     private int level;
     private int position;
     private String website;
+    private String photos;
 
-    public Subject(String name, int state, int level, int position){
+    public Subject(String name, int state, int level, int position, String photos){
         this.name = name;
         this.state = state;
         this.level = level;
         this.position = position;
+        this.setPhotos(photos);
     }
 
     @NonNull
@@ -82,4 +84,14 @@ public class Subject {
     public boolean estasAprobada() {
         return this.getState() == this.APROBADA;
     }
+
+    public String getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String photos) {
+        this.photos = photos;
+    }
+
+
 }

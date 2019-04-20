@@ -5,7 +5,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "teacher_table")
-public class teacher {
+public class Teacher {
 
     @Ignore
     public static final int TITULAR = 0;
@@ -20,6 +20,20 @@ public class teacher {
     private int Type;
     private String email;
     private String webSite;
+
+    @Ignore
+    public Teacher(String subject){
+
+    }
+
+    @Ignore
+    public Teacher(String name, String subject, int type, String email, String webSite){
+        this.setName(name);
+        this.setSubject(subject);
+        this.setType(type);
+        this.setEmail(email);
+        this.setWebSite(webSite);
+    }
 
     public int getId() {
         return id;

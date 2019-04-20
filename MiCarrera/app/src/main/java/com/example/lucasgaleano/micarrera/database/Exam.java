@@ -42,6 +42,12 @@ public class Exam {
     private float score;
     private String description;
 
+
+    @Ignore
+    public Exam(String subject){
+        this(subject, Calendar.getInstance(),0, 0, "A estudiar!!!");
+    }
+
     public Exam(String subject, Calendar date, int type, float score,String description ) {
 
         this.setSubject(subject);

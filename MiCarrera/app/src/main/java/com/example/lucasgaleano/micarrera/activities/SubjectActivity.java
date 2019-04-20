@@ -31,7 +31,7 @@ import com.example.lucasgaleano.micarrera.database.Assignment;
 import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
-import com.example.lucasgaleano.micarrera.database.teacher;
+import com.example.lucasgaleano.micarrera.database.Teacher;
 import com.example.lucasgaleano.micarrera.view.ItemListaView;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
@@ -122,7 +122,7 @@ public class SubjectActivity extends AppCompatActivity {
         });
 
 
-        repo.getAllAssigments().observe(this, new Observer<List<Assignment>>() {
+        repo.getAssigmentsBySubject(subjectName).observe(this, new Observer<List<Assignment>>() {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -138,16 +138,18 @@ public class SubjectActivity extends AppCompatActivity {
     private void setListas() {
 
         listaTareas.setHeader("Tareas");
-        listaTareas.setAddClick(onClickAddItem);
+        listaTareas.setAddClick(onClickAddAssignmentItem);
         listaTareas.setOnClicks(onClickItemTareas);
         listaTareas.setOnLongCLicks(onLongClickItemTareas);
 
 
         listaProfesores.setHeader("Profesores");
         listaProfesores.setOnClicks(onClickItemProfesores);
+        listaProfesores.setAddClick(onClickAddTeacherItem);
 
         listaExamenes.setHeader("Examenes");
         listaExamenes.setOnClicks(onClickItemExam);
+        listaExamenes.setAddClick(onClickAddExamItem);
 
     }
 
@@ -211,7 +213,7 @@ public class SubjectActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent intentProfesores;
             intentProfesores = new Intent(v.getContext(), TeacherInfoActivity.class);
-            teacher aux = (teacher) ((ItemListaView) v).getItem();
+            Teacher aux = (Teacher) ((ItemListaView) v).getItem();
             intentProfesores.putExtra(EXTRA_ID, aux.getId());
             startActivity(intentProfesores);
         }
@@ -238,11 +240,29 @@ public class SubjectActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener onClickAddItem = new View.OnClickListener() {
+    View.OnClickListener onClickAddAssignmentItem = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Assignment newAssignment = new Assignment(subjectName);
             repo.update(newAssignment);
+
+        }
+    };
+
+    View.OnClickListener onClickAddExamItem = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Exam newExam = new Exam(subjectName);
+            repo.update(newExam);
+
+        }
+    };
+
+    View.OnClickListener onClickAddTeacherItem = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Teacher newTeacher = new Teacher(subjectName);
+            repo.update(newTeacher);
 
         }
     };

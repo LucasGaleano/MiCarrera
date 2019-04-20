@@ -89,6 +89,18 @@ public interface Dao {
 
     @Delete
     void delete(Assignment assignments);
+
+    //------Teacher----------------------------------------
+
+    @Insert
+    void insert(Teacher... teachers);
+
+    @Update
+    void update(Teacher... teachers);
+
+    @Query("SELECT * FROM teacher_table WHERE teacher_table.id=:id")
+    Teacher getTeacherById(int id);
+
 }
 
 

@@ -324,4 +324,36 @@ public class Repository {
     }
 
 
+    //------Assignment----------------------------------------
+
+    public void update(Teacher teacher){
+        try {
+            new updateTeacherAsyncTask(mDao).execute(teacher).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private class updateTeacherAsyncTask extends AsyncTask<Teacher, Void, Void> {
+
+        private Dao mDao;
+
+
+        updateTeacherAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Teacher... teachers) {
+            Teacher teacher = mDao.getTeacherById(teachers[0].getId());
+            if(teacher == null)
+                mDao.insert(teachers[0]);
+            else
+                mDao.update(teachers[0]);
+            return null;
+        }
+    }
+
 }

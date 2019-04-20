@@ -29,13 +29,8 @@ public class Assignment{
 
     @Ignore
     public Assignment (String subject){
-        this.date = Calendar.getInstance();
-        this.title = "nueva tarea";
-        this.subject = subject;
-        this.description = "Cosas\nMuchas cosas\nMuchas otras cosas mas";
-        this.photo="";
-        this.Audio="";
-        this.state=0;
+        this(Calendar.getInstance(), subject, "Cosas\nMuchas cosas\nMuchas otras cosas mas", "nueva tarea", "", "", 0);
+
     }
 
     public Assignment(Calendar date,String subject,String description,String title, String photo, String Audio, int state ) {
