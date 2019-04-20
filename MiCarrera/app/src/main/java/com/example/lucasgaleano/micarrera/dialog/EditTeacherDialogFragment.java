@@ -8,14 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.widget.EditText;
 
-import com.example.lucasgaleano.micarrera.activities.AssignmentInfoActivity;
+import com.example.lucasgaleano.micarrera.activities.TeacherInfoActivity;
 
-public class EditAssigmentDialogFragment extends DialogFragment {
+public class EditTeacherDialogFragment extends DialogFragment {
     private String title;
     private String content;
     Bundle argument;
     private EditText edittext;
-    private AssignmentInfoActivity self;
+    private TeacherInfoActivity self;
 
     @NonNull
     @Override
@@ -29,21 +29,24 @@ public class EditAssigmentDialogFragment extends DialogFragment {
         edittext.setText(content);
         builder.setView(edittext);
 
-        self = ((AssignmentInfoActivity) getActivity());
+        self = ((TeacherInfoActivity) getActivity());
 
         builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(title.equals("title")) {
-                    self.assignment.setTitle(edittext.getText().toString());
+                if(title.equals("name")) {
+                    self.teacher.setName(edittext.getText().toString());
                 }
-                if(title.equals("description")) {
-                    self.assignment.setDescription(edittext.getText().toString());
+                if(title.equals("email")) {
+                    self.teacher.setEmail(edittext.getText().toString());
+                }
+                if(title.equals("web")) {
+                    self.teacher.setWebSite(edittext.getText().toString());
                 }
 
-                   self.repo.update(self.assignment);
+                self.repo.update(self.teacher);
 
-                   self.recreate();
+                self.recreate();
                 dismiss();
             }
         });

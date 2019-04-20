@@ -98,6 +98,9 @@ public interface Dao {
     @Update
     void update(Teacher... teachers);
 
+    @Delete
+    void delete(Teacher... teachers);
+
     @Query("SELECT * FROM teacher_table WHERE teacher_table.id=:id")
     Teacher getTeacherById(int id);
 

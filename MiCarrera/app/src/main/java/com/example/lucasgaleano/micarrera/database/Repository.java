@@ -324,7 +324,7 @@ public class Repository {
     }
 
 
-    //------Assignment----------------------------------------
+    //------Teacher----------------------------------------
 
     public void update(Teacher teacher){
         try {
@@ -352,6 +352,48 @@ public class Repository {
                 mDao.insert(teachers[0]);
             else
                 mDao.update(teachers[0]);
+            return null;
+        }
+    }
+
+    public Teacher getTeacherById(int id){
+        try {
+            return new getTeacherByIdAsyncTask(mDao).execute(id).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private class getTeacherByIdAsyncTask  extends AsyncTask<Integer, Void, Teacher> {
+        private Dao dao;
+
+        public getTeacherByIdAsyncTask(Dao mDao) {
+            dao = mDao;
+        }
+
+        @Override
+        protected Teacher doInBackground (Integer... integers) {
+            return dao.getTeacherById(integers[0]);
+        }
+    }
+
+    public void delete(Teacher teacher) {
+        new deleteTeacherAsyncTask(mDao).execute(teacher);
+    }
+
+    private class deleteTeacherAsyncTask extends AsyncTask<Teacher, Void, Void> {
+
+        private Dao mDao;
+        deleteTeacherAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Teacher... Teachers ) {
+            mDao.delete(Teachers[0]);
             return null;
         }
     }

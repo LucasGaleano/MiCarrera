@@ -16,7 +16,6 @@ import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.classes.Calendario;
 import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
-import com.example.lucasgaleano.micarrera.dialog.EditAssigmentDialogFragment;
 import com.example.lucasgaleano.micarrera.dialog.EditExamDialogFragment;
 
 public class ExamInfoActivity extends AppCompatActivity {

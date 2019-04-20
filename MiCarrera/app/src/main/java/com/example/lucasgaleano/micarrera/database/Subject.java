@@ -32,12 +32,11 @@ public class Subject {
     private String website;
     private String photos;
 
-    public Subject(String name, int state, int level, int position, String photos){
+    public Subject(String name, int state, int level, int position){
         this.name = name;
         this.state = state;
         this.level = level;
         this.position = position;
-        this.setPhotos(photos);
     }
 
     @NonNull
