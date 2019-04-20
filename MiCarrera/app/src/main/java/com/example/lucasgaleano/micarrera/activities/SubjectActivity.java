@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -131,6 +132,15 @@ public class SubjectActivity extends AppCompatActivity {
             }
         });
 
+        repo.getTeacherBySubject(subjectName).observe(this, new Observer<List<Teacher>>() {
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onChanged(@Nullable List<Teacher> teachers) {
+                listaProfesores.update(teachers);
+            }
+        });
+
 
     }
 
@@ -146,10 +156,13 @@ public class SubjectActivity extends AppCompatActivity {
         listaProfesores.setHeader("Profesores");
         listaProfesores.setOnClicks(onClickItemProfesores);
         listaProfesores.setAddClick(onClickAddTeacherItem);
+        listaProfesores.setOnLongCLicks(onLongClickItemProfesores);
+
 
         listaExamenes.setHeader("Examenes");
         listaExamenes.setOnClicks(onClickItemExam);
         listaExamenes.setAddClick(onClickAddExamItem);
+        listaExamenes.setOnLongCLicks(onLongClickItemExamenes);
 
     }
 
@@ -235,6 +248,24 @@ public class SubjectActivity extends AppCompatActivity {
         @Override
         public boolean onLongClick(View view) {
             Assignment aux = (Assignment) ((ItemListaView) view).getItem();
+            repo.delete(aux);
+            return true;
+        }
+    };
+
+    View.OnLongClickListener onLongClickItemExamenes = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            Exam aux = (Exam) ((ItemListaView) view).getItem();
+            repo.delete(aux);
+            return true;
+        }
+    };
+
+    View.OnLongClickListener onLongClickItemProfesores = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            Teacher aux = (Teacher) ((ItemListaView) view).getItem();
             repo.delete(aux);
             return true;
         }

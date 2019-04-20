@@ -104,6 +104,9 @@ public interface Dao {
     @Query("SELECT * FROM teacher_table WHERE teacher_table.id=:id")
     Teacher getTeacherById(int id);
 
+    @Query("SELECT * FROM teacher_table WHERE teacher_table.subject=:subjectName")
+    LiveData<List<Teacher>> getTeacherBySubject(String subjectName);
+
 }
 
 

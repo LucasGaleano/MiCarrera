@@ -4,6 +4,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.ArrayList;
+
 @Entity(tableName = "teacher_table")
 public class Teacher {
 
@@ -104,5 +106,16 @@ public class Teacher {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    @Ignore
+    public static ArrayList<CharSequence> getTypes(){
+
+        ArrayList<CharSequence> types = new ArrayList<CharSequence>();
+        types.add("Titular");
+        types.add("Ayudante");
+        types.add("Jefe de TP");
+        types.add("Jefe de catedra");
+        return types;
     }
 }

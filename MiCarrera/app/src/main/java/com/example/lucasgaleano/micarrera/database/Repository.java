@@ -398,4 +398,28 @@ public class Repository {
         }
     }
 
+    public LiveData<List<Teacher>> getTeacherBySubject(String subjectName){
+        try {
+            return new getTeacherBySubjectAsyncTask(mDao).execute(subjectName).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private class getTeacherBySubjectAsyncTask  extends AsyncTask<String, Void, LiveData<List<Teacher>>> {
+        private Dao dao;
+
+        public getTeacherBySubjectAsyncTask(Dao mDao) {
+            dao = mDao;
+        }
+
+        @Override
+        protected LiveData<List<Teacher>> doInBackground(String... strings) {
+            return dao.getTeacherBySubject(strings[0]);
+        }
+    }
+
 }

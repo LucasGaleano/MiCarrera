@@ -12,6 +12,7 @@ import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.classes.Calendario;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Teacher;
+import com.example.lucasgaleano.micarrera.dialog.ChoiceTypeTeacherDialogFragment;
 import com.example.lucasgaleano.micarrera.dialog.EditAssigmentDialogFragment;
 import com.example.lucasgaleano.micarrera.dialog.EditTeacherDialogFragment;
 
@@ -53,7 +54,7 @@ public class TeacherInfoActivity extends AppCompatActivity {
         webTxt.setOnClickListener(clicks);
         nameTxt.setOnClickListener(clicks);
         emailTxt.setOnClickListener(clicks);
-        descriptionTxt.setOnClickListener(clicks);
+        descriptionTxt.setOnClickListener(clicksType);
     }
 
     View.OnClickListener clicks = new View.OnClickListener() {
@@ -68,6 +69,18 @@ public class TeacherInfoActivity extends AppCompatActivity {
             dialog.setArguments(args);
             dialog.show(getSupportFragmentManager(),"Choose");
 
+        }
+    };
+
+    View.OnClickListener clicksType = new View.OnClickListener() {
+        //@SuppressLint("NewApi")
+        @Override
+        public void onClick(View v) {
+            DialogFragment dialog = new ChoiceTypeTeacherDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("TEACHER_ID",teacher.getId());
+            dialog.setArguments(args);
+            dialog.show(getSupportFragmentManager(),"Choose");
         }
     };
 
