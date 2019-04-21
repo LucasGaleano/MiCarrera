@@ -109,13 +109,9 @@ public class Teacher {
     }
 
     @Ignore
-    public static ArrayList<CharSequence> getTypes(){
-
-        ArrayList<CharSequence> types = new ArrayList<CharSequence>();
-        types.add("Titular");
-        types.add("Ayudante");
-        types.add("Jefe de TP");
-        types.add("Jefe de catedra");
-        return types;
+    public static CharSequence[] getTypes(){
+        return new CharSequence[] {"titular","Ayudante",
+                "Jefe de TPs","Jefe de catedra"};
     }
+
 }

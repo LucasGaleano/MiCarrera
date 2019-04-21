@@ -165,4 +165,16 @@ public class Exam {
     public String title() {
         return this.getSubject().concat( Exam.get(this.getType()));
     }
+
+    @Ignore
+    public static CharSequence[] getTypes(){
+        return new CharSequence[] {"Parcial 1","Parcial 2","Parcial 3",
+                                    "primer recuperatorio Parcial 1",
+                                    "segundo recuperatorio Parcial 1",
+                                    "Tercer recuperatorio Parcial 1",
+                                    "primer recuperatorio Parcial 2",
+                                    "segundo recuperatorio Parcial 2",
+                                    "Tercer recuperatorio Parcial 2",
+                                    "Final"};
+    }
 }

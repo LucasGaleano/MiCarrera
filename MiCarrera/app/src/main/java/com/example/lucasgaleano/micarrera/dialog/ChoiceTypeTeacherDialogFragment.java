@@ -5,9 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.activities.TeacherInfoActivity;
-import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Teacher;
 
 public class ChoiceTypeTeacherDialogFragment extends DialogFragment {
@@ -20,8 +18,9 @@ public class ChoiceTypeTeacherDialogFragment extends DialogFragment {
         Bundle argument = getArguments();
         final int id = argument.getInt("TEACHER_ID",-1);
 
+
         builder.setTitle("Cargo")
-                .setItems(R.array.type_teacher_array, new DialogInterface.OnClickListener() {
+                .setItems(Teacher.getTypes(), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
                         self = ((TeacherInfoActivity) getActivity());
