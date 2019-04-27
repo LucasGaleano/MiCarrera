@@ -24,8 +24,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.lucasgaleano.micarrera.R;
 import com.example.lucasgaleano.micarrera.database.Assignment;
@@ -33,12 +35,13 @@ import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
 import com.example.lucasgaleano.micarrera.database.teacher;
+import com.example.lucasgaleano.micarrera.view.FotosAdapter;
 import com.example.lucasgaleano.micarrera.view.ItemListaView;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
-import com.example.lucasgaleano.micarrera.view.fotos_adapter;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -57,6 +60,7 @@ public class SubjectActivity extends AppCompatActivity {
     public Uri outputFileUri;
     private Subject subject;
     public Bitmap d,scaled;
+    public List<String> listaFotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +68,6 @@ public class SubjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subject);
 
         GridView gridView;
-        String[] letters = new String[] {
-                //"/AyED-4136.jpg", "/AyED-3607.jpg", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-                 "Z"};
 
         initNavigationAndToolbar();
 
@@ -86,8 +87,26 @@ public class SubjectActivity extends AppCompatActivity {
         fab_action = findViewById(R.id.fab);
         foto = findViewById(R.id.camara);
 
+        listaFotos=ReadSDCard();
         gridView = (GridView) findViewById(R.id.baseGridView);
-        gridView.setAdapter(new fotos_adapter(this, letters));
+        gridView.setAdapter(new FotosAdapter(this,listaFotos));
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String selectedItem = listaFotos.get(position);
+                Toast.makeText(getApplicationContext(),selectedItem,Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse("file://" + selectedItem), "image/*");
+                startActivity(intent);
+
+            }
+        });
+
 
         fab_action.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,7 +311,28 @@ public class SubjectActivity extends AppCompatActivity {
         }
     }
 
+    private List<String> ReadSDCard()
+    {
+        //It have to be matched with the directory in SDCard
+        //File f = new File("/storage/emulated/0/Pictures");
+        File f = new File ("");
+        f=Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
 
+
+        File[] files=f.listFiles();
+        List<String> tFileList = new ArrayList<String>();
+
+        for(int i=0; i<files.length; i++)
+        {
+            File file = files[i];
+            /*It's assumed that all file in the path are in supported type*/
+            String filePath = file.getPath();
+            if(filePath.endsWith(".jpg") && filePath.startsWith(subjectName,29)) // Condition to check
+                tFileList.add(filePath);
+        }
+        return tFileList;
+    }
 }
 
 
