@@ -30,6 +30,7 @@ public class Subject {
     private int level;
     private int position;
     private String website;
+    private String photos;
 
     public Subject(String name, int state, int level, int position){
         this.name = name;
@@ -82,4 +83,14 @@ public class Subject {
     public boolean estasAprobada() {
         return this.getState() == this.APROBADA;
     }
+
+    public String getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String photos) {
+        this.photos = photos;
+    }
+
+
 }

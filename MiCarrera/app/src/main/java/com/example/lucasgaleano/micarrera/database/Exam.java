@@ -42,6 +42,12 @@ public class Exam {
     private float score;
     private String description;
 
+
+    @Ignore
+    public Exam(String subject){
+        this(subject, Calendar.getInstance(),0, 0, "A estudiar!!!");
+    }
+
     public Exam(String subject, Calendar date, int type, float score,String description ) {
 
         this.setSubject(subject);
@@ -73,6 +79,11 @@ public class Exam {
 
     public void setDate(Calendar date) {
         this.date = date;
+    }
+
+    @Ignore
+    public void setDate(int year, int month, int day) {
+        this.date.set(year,month,day);
     }
 
     public int getType() {
@@ -141,4 +152,29 @@ public class Exam {
         return this.get(this.type) +" "+ Calendario.formatDate(this.getDate());
     }
 
+    @Ignore
+    public int getyear(){ return this.getDate().get(Calendar.YEAR);}
+
+    @Ignore
+    public int getmonth(){ return this.getDate().get(Calendar.MONTH);}
+
+    @Ignore
+    public int getday(){ return this.getDate().get(Calendar.DAY_OF_MONTH);}
+
+    @Ignore
+    public String title() {
+        return this.getSubject().concat( Exam.get(this.getType()));
+    }
+
+    @Ignore
+    public static CharSequence[] getTypes(){
+        return new CharSequence[] {"Parcial 1","Parcial 2","Parcial 3",
+                                    "primer recuperatorio Parcial 1",
+                                    "segundo recuperatorio Parcial 1",
+                                    "Tercer recuperatorio Parcial 1",
+                                    "primer recuperatorio Parcial 2",
+                                    "segundo recuperatorio Parcial 2",
+                                    "Tercer recuperatorio Parcial 2",
+                                    "Final"};
+    }
 }

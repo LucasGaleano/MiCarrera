@@ -4,22 +4,41 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.ArrayList;
+
 @Entity(tableName = "teacher_table")
-public class teacher {
+public class Teacher {
 
     @Ignore
     public static final int TITULAR = 0;
+    @Ignore
     public static final int AYUDANTE = 1;
+    @Ignore
     public static final int JTP = 2; //jefe de TP
+    @Ignore
     public static final int JC = 3; //jefe de catedra
 
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
-    private String Subject;
-    private int Type;
+    private String subject;
+    private int type;
     private String email;
     private String webSite;
+
+    @Ignore
+    public Teacher(String subject){
+        this("Profesor Nuevo" ,subject, 0, "miProfesor@gmail.com", "miProfesor.com");
+    }
+
+
+    public Teacher(String name, String subject, int type, String email, String webSite){
+        this.setName(name);
+        this.setSubject(subject);
+        this.setType(type);
+        this.setEmail(email);
+        this.setWebSite(webSite);
+    }
 
     public int getId() {
         return id;
@@ -38,19 +57,19 @@ public class teacher {
     }
 
     public String getSubject() {
-        return Subject;
+        return subject;
     }
 
     public void setSubject(String subject) {
-        Subject = subject;
+        this.subject = subject;
     }
 
     public int getType() {
-        return Type;
+        return type;
     }
 
     public void setType(int type) {
-        Type = type;
+        this.type = type;
     }
 
     public String getEmail() {
@@ -88,4 +107,11 @@ public class teacher {
     public String toString() {
         return this.name;
     }
+
+    @Ignore
+    public static CharSequence[] getTypes(){
+        return new CharSequence[] {"titular","Ayudante",
+                "Jefe de TPs","Jefe de catedra"};
+    }
+
 }

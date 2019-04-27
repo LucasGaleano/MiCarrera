@@ -56,24 +56,6 @@ public class Repository {
         return null;
     }
 
-    public void delete(Assignment assignment) {
-        new deleteAsyncTask(mDao).execute(assignment);
-    }
-
-    private class deleteAsyncTask extends AsyncTask<Assignment, Void, Void> {
-
-        private Dao mDao;
-        deleteAsyncTask(Dao dao) {
-            mDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(Assignment... assignments) {
-            mDao.delete(assignments[0]);
-            return null;
-        }
-    }
-
     private class getPredecessorByNameAsyncTask extends AsyncTask<String, Void, List<String>> {
 
         private Dao mDao;
@@ -197,12 +179,53 @@ public class Repository {
         }
     }
 
+    public void update(Exam exam) {
+        new updateExamAsyncTask(mDao).execute(exam);
+    }
+
+    private class updateExamAsyncTask extends AsyncTask<Exam, Void, Void> {
+
+        private Dao mDao;
+
+        updateExamAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Exam... exams) {
+            Exam exam = mDao.getExamsById(exams[0].getId());
+            if(exam == null)
+                mDao.insert(exams[0]);
+            else
+                mDao.update(exams[0]);
+            return null;
+        }
+    }
+
+    public void delete(Exam exam) {
+        new deleteExamAsyncTask(mDao).execute(exam);
+    }
+
+    private class deleteExamAsyncTask extends AsyncTask<Exam, Void, Void> {
+
+        private Dao mDao;
+        deleteExamAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Exam... exams) {
+            mDao.delete(exams[0]);
+            return null;
+        }
+    }
+
 
     //------Assignment----------------------------------------
 
     public void update(Assignment assignment){
         try {
-            new updateAsyncTask(mDao).execute(assignment).get();
+            new updateAssignmentAsyncTask(mDao).execute(assignment).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -210,12 +233,12 @@ public class Repository {
         }
     }
 
-    private class updateAsyncTask extends AsyncTask<Assignment, Void, Void> {
+    private class updateAssignmentAsyncTask extends AsyncTask<Assignment, Void, Void> {
 
         private Dao mDao;
 
 
-        updateAsyncTask(Dao dao) {
+        updateAssignmentAsyncTask(Dao dao) {
             mDao = dao;
         }
 
@@ -282,5 +305,121 @@ public class Repository {
         }
     }
 
+    public void delete(Assignment assignment) {
+        new deleteAssignmentAsyncTask(mDao).execute(assignment);
+    }
+
+    private class deleteAssignmentAsyncTask extends AsyncTask<Assignment, Void, Void> {
+
+        private Dao mDao;
+        deleteAssignmentAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Assignment... assignments) {
+            mDao.delete(assignments[0]);
+            return null;
+        }
+    }
+
+
+    //------Teacher----------------------------------------
+
+    public void update(Teacher teacher){
+        try {
+            new updateTeacherAsyncTask(mDao).execute(teacher).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private class updateTeacherAsyncTask extends AsyncTask<Teacher, Void, Void> {
+
+        private Dao mDao;
+
+
+        updateTeacherAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Teacher... teachers) {
+            Teacher teacher = mDao.getTeacherById(teachers[0].getId());
+            if(teacher == null)
+                mDao.insert(teachers[0]);
+            else
+                mDao.update(teachers[0]);
+            return null;
+        }
+    }
+
+    public Teacher getTeacherById(int id){
+        try {
+            return new getTeacherByIdAsyncTask(mDao).execute(id).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private class getTeacherByIdAsyncTask  extends AsyncTask<Integer, Void, Teacher> {
+        private Dao dao;
+
+        public getTeacherByIdAsyncTask(Dao mDao) {
+            dao = mDao;
+        }
+
+        @Override
+        protected Teacher doInBackground (Integer... integers) {
+            return dao.getTeacherById(integers[0]);
+        }
+    }
+
+    public void delete(Teacher teacher) {
+        new deleteTeacherAsyncTask(mDao).execute(teacher);
+    }
+
+    private class deleteTeacherAsyncTask extends AsyncTask<Teacher, Void, Void> {
+
+        private Dao mDao;
+        deleteTeacherAsyncTask(Dao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Teacher... Teachers ) {
+            mDao.delete(Teachers[0]);
+            return null;
+        }
+    }
+
+    public LiveData<List<Teacher>> getTeacherBySubject(String subjectName){
+        try {
+            return new getTeacherBySubjectAsyncTask(mDao).execute(subjectName).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private class getTeacherBySubjectAsyncTask  extends AsyncTask<String, Void, LiveData<List<Teacher>>> {
+        private Dao dao;
+
+        public getTeacherBySubjectAsyncTask(Dao mDao) {
+            dao = mDao;
+        }
+
+        @Override
+        protected LiveData<List<Teacher>> doInBackground(String... strings) {
+            return dao.getTeacherBySubject(strings[0]);
+        }
+    }
 
 }

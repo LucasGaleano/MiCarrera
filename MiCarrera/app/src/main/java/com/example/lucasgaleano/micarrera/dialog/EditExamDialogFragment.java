@@ -8,13 +8,14 @@ import android.support.v4.app.DialogFragment;
 import android.widget.EditText;
 
 import com.example.lucasgaleano.micarrera.activities.AssignmentInfoActivity;
+import com.example.lucasgaleano.micarrera.activities.ExamInfoActivity;
 
-public class EditDialogFragment extends DialogFragment {
+public class EditExamDialogFragment extends DialogFragment {
     private String title;
     private String content;
     Bundle argument;
     private EditText edittext;
-    private AssignmentInfoActivity self;
+    private ExamInfoActivity self;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -27,21 +28,21 @@ public class EditDialogFragment extends DialogFragment {
         edittext.setText(content);
         builder.setView(edittext);
 
-        self = ((AssignmentInfoActivity) getActivity());
+        self = ((ExamInfoActivity) getActivity());
 
         builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(title.equals("title")) {
-                    self.assignment.setTitle(edittext.getText().toString());
+                    //self.exam.setTitle(exam); TODO choice title from dialog
                 }
                 if(title.equals("description")) {
-                    self.assignment.setDescription(edittext.getText().toString());
+                    self.exam.setDescription(edittext.getText().toString());
                 }
 
-                   self.repo.update(self.assignment);
+                self.repo.update(self.exam);
 
-                   self.recreate();
+                self.recreate();
                 dismiss();
             }
         });

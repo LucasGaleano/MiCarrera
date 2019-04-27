@@ -37,7 +37,10 @@ public interface Dao {
     void insert(Subject... subjects);
 
     @Update
-    void update(Subject... subject);
+    void update(Subject... subjects);
+
+    @Delete
+    void delete(Subject... subjects);
 
     //------Exam----------------------------------------
 
@@ -62,6 +65,9 @@ public interface Dao {
     @Update
     void update(Exam... exams);
 
+    @Delete
+    void delete(Exam Exams);
+
     //------Assignment----------------------------------------
 
     @Insert
@@ -83,6 +89,24 @@ public interface Dao {
 
     @Delete
     void delete(Assignment assignments);
+
+    //------Teacher----------------------------------------
+
+    @Insert
+    void insert(Teacher... teachers);
+
+    @Update
+    void update(Teacher... teachers);
+
+    @Delete
+    void delete(Teacher... teachers);
+
+    @Query("SELECT * FROM teacher_table WHERE teacher_table.id=:id")
+    Teacher getTeacherById(int id);
+
+    @Query("SELECT * FROM teacher_table WHERE teacher_table.subject=:subjectName")
+    LiveData<List<Teacher>> getTeacherBySubject(String subjectName);
+
 }
 
 

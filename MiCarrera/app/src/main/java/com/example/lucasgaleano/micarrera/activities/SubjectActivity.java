@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -34,8 +35,12 @@ import com.example.lucasgaleano.micarrera.database.Assignment;
 import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
+<<<<<<< HEAD
 import com.example.lucasgaleano.micarrera.database.teacher;
 import com.example.lucasgaleano.micarrera.view.FotosAdapter;
+=======
+import com.example.lucasgaleano.micarrera.database.Teacher;
+>>>>>>> refs/remotes/origin/master
 import com.example.lucasgaleano.micarrera.view.ItemListaView;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
@@ -151,12 +156,21 @@ public class SubjectActivity extends AppCompatActivity {
         });
 
 
-        repo.getAllAssigments().observe(this, new Observer<List<Assignment>>() {
+        repo.getAssigmentsBySubject(subjectName).observe(this, new Observer<List<Assignment>>() {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onChanged(final List<Assignment> assignments) {
                 listaTareas.update(assignments);
+            }
+        });
+
+        repo.getTeacherBySubject(subjectName).observe(this, new Observer<List<Teacher>>() {
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onChanged(@Nullable List<Teacher> teachers) {
+                listaProfesores.update(teachers);
             }
         });
 
@@ -167,16 +181,21 @@ public class SubjectActivity extends AppCompatActivity {
     private void setListas() {
 
         listaTareas.setHeader("Tareas");
-        listaTareas.setAddClick(onClickAddItem);
+        listaTareas.setAddClick(onClickAddAssignmentItem);
         listaTareas.setOnClicks(onClickItemTareas);
         listaTareas.setOnLongCLicks(onLongClickItemTareas);
 
 
         listaProfesores.setHeader("Profesores");
         listaProfesores.setOnClicks(onClickItemProfesores);
+        listaProfesores.setAddClick(onClickAddTeacherItem);
+        listaProfesores.setOnLongCLicks(onLongClickItemProfesores);
+
 
         listaExamenes.setHeader("Examenes");
         listaExamenes.setOnClicks(onClickItemExam);
+        listaExamenes.setAddClick(onClickAddExamItem);
+        listaExamenes.setOnLongCLicks(onLongClickItemExamenes);
 
     }
 
@@ -240,7 +259,7 @@ public class SubjectActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent intentProfesores;
             intentProfesores = new Intent(v.getContext(), TeacherInfoActivity.class);
-            teacher aux = (teacher) ((ItemListaView) v).getItem();
+            Teacher aux = (Teacher) ((ItemListaView) v).getItem();
             intentProfesores.putExtra(EXTRA_ID, aux.getId());
             startActivity(intentProfesores);
         }
@@ -267,11 +286,47 @@ public class SubjectActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener onClickAddItem = new View.OnClickListener() {
+    View.OnLongClickListener onLongClickItemExamenes = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            Exam aux = (Exam) ((ItemListaView) view).getItem();
+            repo.delete(aux);
+            return true;
+        }
+    };
+
+    View.OnLongClickListener onLongClickItemProfesores = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            Teacher aux = (Teacher) ((ItemListaView) view).getItem();
+            repo.delete(aux);
+            return true;
+        }
+    };
+
+    View.OnClickListener onClickAddAssignmentItem = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Assignment newAssignment = new Assignment(subjectName);
             repo.update(newAssignment);
+
+        }
+    };
+
+    View.OnClickListener onClickAddExamItem = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Exam newExam = new Exam(subjectName);
+            repo.update(newExam);
+
+        }
+    };
+
+    View.OnClickListener onClickAddTeacherItem = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Teacher newTeacher = new Teacher(subjectName);
+            repo.update(newTeacher);
 
         }
     };
