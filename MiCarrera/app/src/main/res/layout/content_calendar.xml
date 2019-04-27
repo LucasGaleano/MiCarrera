@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/calendarioEventos">
 
-        <com.example.lucasgaleano.micarrera.view.ListaView
+        <com.example.pyrca.micarrera.view.ListaView
             android:id="@+id/listaEventos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

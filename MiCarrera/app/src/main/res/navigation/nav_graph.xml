@@ -7,7 +7,7 @@
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.example.lucasgaleano.micarrera.activities.MainActivity"
+        android:name="com.example.pyrca.micarrera.activities.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main">
         <action
@@ -19,7 +19,7 @@
 
     <activity
         android:id="@+id/treeActivity"
-        android:name="com.example.lucasgaleano.micarrera.activities.TreeActivity"
+        android:name="com.example.pyrca.micarrera.activities.TreeActivity"
         android:label="activity_tree"
         tools:layout="@layout/activity_tree" >
         <action
@@ -29,7 +29,7 @@
 
     <activity
         android:id="@+id/subjectActivity"
-        android:name="com.example.lucasgaleano.micarrera.activities.SubjectActivity"
+        android:name="com.example.pyrca.micarrera.activities.SubjectActivity"
         android:label="activity_subject"
         tools:layout="@layout/content_subject" >
         <action
@@ -42,23 +42,23 @@
 
     <activity
         android:id="@+id/assignmentInfoActivity"
-        android:name="com.example.lucasgaleano.micarrera.activities.AssignmentInfoActivity"
+        android:name="com.example.pyrca.micarrera.activities.AssignmentInfoActivity"
         android:label="activity_assignment_info"
         tools:layout="@layout/activity_assignment_info" />
     <activity
         android:id="@+id/teacherInfoActivity"
-        android:name="com.example.lucasgaleano.micarrera.activities.TeacherInfoActivity"
+        android:name="com.example.pyrca.micarrera.activities.TeacherInfoActivity"
         android:label="activity_teacher_info"
         tools:layout="@layout/activity_teacher_info" />
     <activity
         android:id="@+id/examInfoActivity"
-        android:name="com.example.lucasgaleano.micarrera.activities.ExamInfoActivity"
+        android:name="com.example.pyrca.micarrera.activities.ExamInfoActivity"
         android:label="activity_info_exam"
         tools:layout="@layout/activity_info_exam" />
 
     <activity
         android:id="@+id/calendarActivity"
-        android:name="com.example.lucasgaleano.micarrera.activities.CalendarActivity"
+        android:name="com.example.pyrca.micarrera.activities.CalendarActivity"
         android:label="activity_calendar"
         tools:layout="@layout/activity_calendar" />
 </navigation>

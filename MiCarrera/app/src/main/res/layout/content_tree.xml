@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.example.lucasgaleano.micarrera.view.SubjectTreeView
+            <com.example.pyrca.micarrera.view.SubjectTreeView
                 android:id="@+id/treeView"
                 android:layout_width="500dp"
                 android:layout_height="match_parent"
