@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -68,6 +69,9 @@ public class SubjectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
 
         initNavigationAndToolbar();
 
@@ -386,10 +390,6 @@ public class SubjectActivity extends AppCompatActivity {
     {
         //It have to be matched with the directory in SDCard
         File f = new File("/storage/emulated/0/Pictures");
-        //File f = new File ("");
-        //f=Environment.getExternalStoragePublicDirectory(
-          //      Environment.DIRECTORY_PICTURES);
-
 
         File[] files=f.listFiles();
         List<String> tFileList = new ArrayList<String>();
