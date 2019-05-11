@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <com.example.lucasgaleano.micarrera.view.ListaView
+            <com.example.pyrca.micarrera.view.ListaView
                 android:id="@+id/listaTareas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.example.lucasgaleano.micarrera.view.ListaView
+            <com.example.pyrca.micarrera.view.ListaView
                 android:id="@+id/listaExamenes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/listaTareas" />
 
-            <com.example.lucasgaleano.micarrera.view.ListaView
+            <com.example.pyrca.micarrera.view.ListaView
                 android:id="@+id/listaProfesores"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,7 +54,6 @@
                 android:layout_marginLeft="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/listaExamenes" />
-
 
 
             <ImageView
