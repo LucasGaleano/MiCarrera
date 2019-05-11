@@ -35,12 +35,8 @@ import com.example.lucasgaleano.micarrera.database.Assignment;
 import com.example.lucasgaleano.micarrera.database.Exam;
 import com.example.lucasgaleano.micarrera.database.Repository;
 import com.example.lucasgaleano.micarrera.database.Subject;
-<<<<<<< HEAD
-import com.example.lucasgaleano.micarrera.database.teacher;
-import com.example.lucasgaleano.micarrera.view.FotosAdapter;
-=======
 import com.example.lucasgaleano.micarrera.database.Teacher;
->>>>>>> refs/remotes/origin/master
+import com.example.lucasgaleano.micarrera.view.FotosAdapter;
 import com.example.lucasgaleano.micarrera.view.ItemListaView;
 import com.example.lucasgaleano.micarrera.view.ListaView;
 import com.example.lucasgaleano.micarrera.view.NavigationMenu;
@@ -91,7 +87,7 @@ public class SubjectActivity extends AppCompatActivity {
 
         fab_action = findViewById(R.id.fab);
         foto = findViewById(R.id.camara);
-
+        /*
         listaFotos=ReadSDCard();
         gridView = (GridView) findViewById(R.id.baseGridView);
         gridView.setAdapter(new FotosAdapter(this,listaFotos));
@@ -110,7 +106,7 @@ public class SubjectActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
-        });
+        });*/
 
 
         fab_action.setOnClickListener(new View.OnClickListener() {
