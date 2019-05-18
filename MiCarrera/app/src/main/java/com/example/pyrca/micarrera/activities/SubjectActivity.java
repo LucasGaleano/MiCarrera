@@ -59,6 +59,7 @@ public class SubjectActivity extends AppCompatActivity {
     public ImageView foto;
     public File file;
     public String pictureImagePath = "";
+    public String carpeta = "/storage/emulated/0/Pictures/Ficus/";///storage/emulated/0/Pictures/Ficus/
     public Uri outputFileUri;
     private Subject subject;
     public Bitmap d,scaled;
@@ -137,7 +138,7 @@ public class SubjectActivity extends AppCompatActivity {
                 Random generator = new Random();
                 int n = 10000;
                 n = generator.nextInt(n);
-                pictureImagePath = storageDir.getAbsolutePath() + "/" + subjectName +"-"+ n +".jpg";
+                pictureImagePath = storageDir.getAbsolutePath() + "/Ficus/" + subjectName + "/" + subjectName +"-"+ n +".jpg";
 
                 if (ContextCompat.checkSelfPermission(SubjectActivity.this,
                         Manifest.permission.READ_CONTACTS)
@@ -350,11 +351,13 @@ public class SubjectActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultcode, Intent data) {
         super.onActivityResult(requestCode, resultcode, data);
-
-        d = new BitmapDrawable(this.getResources(), file.getAbsolutePath()).getBitmap();
-        int nh = (int) ( d.getHeight() * (512.0 / d.getWidth()) );
-        scaled = Bitmap.createScaledBitmap(d, 512, nh, true);
-        foto.setImageBitmap(scaled);
+        recreate();
+        if(requestCode!=0) {
+            d = new BitmapDrawable(this.getResources(), file.getAbsolutePath()).getBitmap();
+            int nh = (int) (d.getHeight() * (512.0 / d.getWidth()));
+            scaled = Bitmap.createScaledBitmap(d, 512, nh, true);
+            foto.setImageBitmap(scaled);
+        }
     }
 
     @Override
@@ -365,6 +368,7 @@ public class SubjectActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
                     file = new File(pictureImagePath);
                     outputFileUri = Uri.fromFile(file);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -380,8 +384,17 @@ public class SubjectActivity extends AppCompatActivity {
             // other 'case' lines to check for other
             // permissions this app might request.
             case 22:
+                File f = new File(carpeta+subjectName);
+                if(!f.isDirectory()) {
+                    String dir = carpeta + subjectName;
+                    File imageDirectory = new File(dir);
+                    imageDirectory.mkdirs();
+                }
                 listaFotos=ReadSDCard();
                 gridView.setAdapter(new FotosAdapter(this,listaFotos));
+                return;
+
+            case 99:
                 return;
         }
     }
@@ -389,19 +402,27 @@ public class SubjectActivity extends AppCompatActivity {
     private List<String> ReadSDCard()
     {
         //It have to be matched with the directory in SDCard
-        File f = new File("/storage/emulated/0/Pictures");
+        File f = new File(carpeta+subjectName);
 
         File[] files=f.listFiles();
         List<String> tFileList = new ArrayList<String>();
+
+        try {
 
         for(int i=0; i<files.length; i++)
         {
             File file = files[i];
             /*It's assumed that all file in the path are in supported type*/
             String filePath = file.getPath();
-            if(filePath.endsWith(".jpg") && filePath.startsWith(subjectName,29)) // Condition to check
+            if(filePath.endsWith(".jpg")) // Condition to check
                 tFileList.add(filePath);
         }
+
+        }
+        catch(Exception e) {
+            System.out.println("Null pointer exception");
+        }
+
         return tFileList;
     }
 }
