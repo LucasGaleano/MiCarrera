@@ -92,9 +92,6 @@ public class ListaView extends LinearLayout {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void addItem(Object item) {
         ItemListaView lItem = new ItemListaView(context);
-        //lItem.setBackgroundColor(getResources().getColor(R.color.Blanco));
-        //final ColorStateList backgroundTintList = AppCompatResources.getColorStateList(context, R.color.Blanco);
-        //ViewCompat.setBackgroundTintList(lItem, backgroundTintList);
         lItem.setTextSize(SizeLetra * (float) 0.8);
         lItem.setPadding((int) SizeLetra * 2, 5, 5, 5);
         lItem.setOnClickListener(this.onClick);

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.example.pyrca.micarrera.R;
 import com.example.pyrca.micarrera.activities.CalendarActivity;
+import com.example.pyrca.micarrera.activities.ListWorkActivity;
 import com.example.pyrca.micarrera.activities.TreeActivity;
 
 public class NavigationMenu extends AppCompatActivity{
@@ -34,6 +35,8 @@ public class NavigationMenu extends AppCompatActivity{
                     Intent intent = new Intent(getContext(),TreeActivity.class);
                     getContext().startActivity(intent);
                 } else if (id == R.id.nav_Tareas) {
+                    Intent intent = new Intent(getContext(), ListWorkActivity.class);
+                    getContext().startActivity(intent);
 
                 } else if (id == R.id.nav_calendario && getContext().getClass() != CalendarActivity.class) {
                     Intent intent = new Intent(getContext(),CalendarActivity.class);

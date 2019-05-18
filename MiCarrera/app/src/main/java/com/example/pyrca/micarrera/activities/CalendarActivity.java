@@ -38,7 +38,7 @@ public class CalendarActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-
+        this.setTitle("Calendario");
         initNavigationAndToolbar();
         repo = new Repository(getApplication());
         listaExamenes = new ArrayList<>();

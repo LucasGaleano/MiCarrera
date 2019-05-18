@@ -125,7 +125,7 @@ public class Assignment{
 
     @Override
     public String toString() {
-        return this.title;
+        return this.title + "  " + this.getday() + '/' + this.getmonth() + '/' + this.getyear();
     }
 
     @Ignore
