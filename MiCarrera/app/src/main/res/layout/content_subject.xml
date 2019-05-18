@@ -78,7 +78,8 @@
                 android:stretchMode="columnWidth"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/listaProfesores" />
+                app:layout_constraintTop_toBottomOf="@id/listaProfesores"
+                />
 
             <ImageView
                 android:id="@+id/camara"
