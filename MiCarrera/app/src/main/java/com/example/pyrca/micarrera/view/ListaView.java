@@ -143,8 +143,10 @@ public class ListaView extends LinearLayout {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void cleanAll() {
         this.removeAllViews();
-        this.createHeader();
-        this.setHeader(this.titulo);
+        if(this.mheader) {
+            this.createHeader();
+            this.setHeader(this.titulo);
+        }
     }
 
     public void setOnClicks(OnClickListener onClicks) {
