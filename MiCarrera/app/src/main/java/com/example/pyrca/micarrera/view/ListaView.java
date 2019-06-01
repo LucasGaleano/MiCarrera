@@ -3,6 +3,7 @@ package com.example.pyrca.micarrera.view;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -31,31 +32,47 @@ public class ListaView extends LinearLayout {
     private OnClickListener onClick;
     private OnClickListener addClick;
     private OnLongClickListener onLongClick;
+    private boolean mheader;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ListaView(Context context) {
         super(context);
-        init(context);
+        this.context = context;
+        init();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ListaView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        setAttrs(context, attrs);
+        init();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ListaView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        setAttrs(context, attrs);
+        init();
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void init(Context context) {
-        this.context = context;
+    private void init() {
         this.setOrientation(VERTICAL);
-        createHeader();
+        if(this.mheader) {
+            createHeader();
+        }
+    }
+
+    private void setAttrs(Context context, @Nullable AttributeSet attrs){
+        this.context = context;
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ListaView, 0, 0);
+
+        try {
+            mheader = a.getBoolean(R.styleable.ListaView_header, true);
+        } finally {
+            a.recycle();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

@@ -42,7 +42,6 @@ public class ListWorkActivity extends AppCompatActivity {
                     }
                 }
         );
-
     }
 
 
