@@ -13,10 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.pyrca.micarrera.R;
 import com.example.pyrca.micarrera.database.Assignment;
 import com.example.pyrca.micarrera.database.Repository;
+import com.example.pyrca.micarrera.view.ItemListaView;
 import com.example.pyrca.micarrera.view.ListaView;
 import com.example.pyrca.micarrera.view.NavigationMenu;
 
@@ -33,6 +35,7 @@ public class ListWorkActivity extends AppCompatActivity {
         initNavigationAndToolbar();
         this.repo = new Repository(getApplication());
         this.listaTareas = findViewById(R.id.listwork);
+        this.listaTareas.setOnLongCLicks(onLongclickItem);
 
         repo.getAllAssigments().observe(this, new Observer<List<Assignment>>() {
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -44,6 +47,14 @@ public class ListWorkActivity extends AppCompatActivity {
         );
     }
 
+    View.OnLongClickListener onLongclickItem = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            Assignment aux = (Assignment) ((ItemListaView) v).getItem();
+            repo.delete(aux);
+            return true;
+        }
+    };
 
     private void initNavigationAndToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

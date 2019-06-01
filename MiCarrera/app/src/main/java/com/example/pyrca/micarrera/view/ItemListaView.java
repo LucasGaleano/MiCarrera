@@ -16,17 +16,17 @@ public class ItemListaView extends AppCompatTextView {
 
     @Override
     public String toString() {
-        String entryName = null;
-        entryName= String.valueOf(this.getId());
+        String entryName;
+        entryName = String.valueOf(this.getId());
         return (entryName);
     }
 
-    public void additem(Object item){
-        this.item=item;
+    public void additem(Object item) {
+        this.item = item;
         this.setText(item.toString());
     }
 
-    public Object getItem (){
+    public Object getItem() {
         return this.item;
     }
 

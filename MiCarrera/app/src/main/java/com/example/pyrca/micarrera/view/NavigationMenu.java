@@ -34,7 +34,7 @@ public class NavigationMenu extends AppCompatActivity{
                 if (id == R.id.nav_materias && getContext().getClass() != TreeActivity.class) {
                     Intent intent = new Intent(getContext(),TreeActivity.class);
                     getContext().startActivity(intent);
-                } else if (id == R.id.nav_Tareas) {
+                } else if (id == R.id.nav_Tareas && getContext().getClass() != ListWorkActivity.class) {
                     Intent intent = new Intent(getContext(), ListWorkActivity.class);
                     getContext().startActivity(intent);
 

@@ -2,20 +2,19 @@ package com.example.pyrca.micarrera.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pyrca.micarrera.R;
 
@@ -26,7 +25,6 @@ public class ListaView extends LinearLayout {
 
     private TextView header;
     private Context context;
-    private Button add_header_button;
     private float SizeLetra = 20;
     private String titulo;
     private OnClickListener onClick;
@@ -59,12 +57,13 @@ public class ListaView extends LinearLayout {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void init() {
         this.setOrientation(VERTICAL);
-        if(this.mheader) {
+        if (this.mheader) {
             createHeader();
         }
+
     }
 
-    private void setAttrs(Context context, @Nullable AttributeSet attrs){
+    private void setAttrs(Context context, @Nullable AttributeSet attrs) {
         this.context = context;
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ListaView, 0, 0);
 
@@ -86,7 +85,7 @@ public class ListaView extends LinearLayout {
         header = new TextView(context);
         header.setPadding(20, 10, 10, 10);
         header.setTextSize(SizeLetra);
-        add_header_button = new Button(this.context);
+        Button add_header_button = new Button(this.context);
 
         add_header_button.setOnClickListener(addClick);
 
@@ -97,7 +96,6 @@ public class ListaView extends LinearLayout {
         headerLayout.addView(add_header_button);
         this.addView(headerLayout);
     }
-
 
 
     public void setHeader(String Titulo) {
@@ -143,7 +141,7 @@ public class ListaView extends LinearLayout {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void cleanAll() {
         this.removeAllViews();
-        if(this.mheader) {
+        if (this.mheader) {
             this.createHeader();
             this.setHeader(this.titulo);
         }
@@ -152,11 +150,12 @@ public class ListaView extends LinearLayout {
     public void setOnClicks(OnClickListener onClicks) {
         this.onClick = onClicks;
     }
+
     public void setOnLongCLicks(OnLongClickListener onClicks) {
         this.onLongClick = onClicks;
     }
 
-    public void setAddClick(OnClickListener onClicks){
+    public void setAddClick(OnClickListener onClicks) {
         this.addClick = onClicks;
     }
 }
