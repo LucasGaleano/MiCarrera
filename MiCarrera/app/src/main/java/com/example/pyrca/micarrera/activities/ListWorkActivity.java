@@ -30,7 +30,6 @@ public class ListWorkActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listwork);
-        this.setTitle("Tareas");
         initNavigationAndToolbar();
         this.repo = new Repository(getApplication());
         this.listaTareas = findViewById(R.id.listwork);
