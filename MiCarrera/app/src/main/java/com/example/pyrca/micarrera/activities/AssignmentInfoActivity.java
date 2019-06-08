@@ -20,9 +20,6 @@ import com.example.pyrca.micarrera.dialog.EditAssigmentDialogFragment;
 
 public class AssignmentInfoActivity extends AppCompatActivity{
 
-    private TextView titleTxt;
-    private TextView dateTxt;
-    private TextView descriptionTxt;
     public Assignment assignment;
     public Repository repo;
 
@@ -34,15 +31,16 @@ public class AssignmentInfoActivity extends AppCompatActivity{
         int id = getIntent().getIntExtra(SubjectActivity.EXTRA_ID, -1);
 
         repo = new Repository(getApplication());
-        assignment = repo.getAssigmentById(id);
+        this.assignment = repo.getAssigmentById(id);
         updateData(assignment);
+        this.setTitle(this.assignment.getSubject());
     }
 
     private void updateData(Assignment assignment) {
 
-        titleTxt = findViewById(R.id.title);
-        dateTxt = findViewById(R.id.date);
-        descriptionTxt = findViewById(R.id.description);
+        TextView titleTxt = findViewById(R.id.title);
+        TextView dateTxt = findViewById(R.id.date);
+        TextView descriptionTxt = findViewById(R.id.description);
 
         titleTxt.setText(assignment.getTitle());
         dateTxt.setText(Calendario.formatDate(assignment.getDate()));
