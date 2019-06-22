@@ -7,14 +7,16 @@
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name='android:colorSecondary'>@color/secondaryColor</item>
+        <!--<item name="android:background">@color/BackgroundAppColor</item>-->
 
 
         <!-- enable window content transitions -->
         <item name="android:windowActivityTransitions">true</item>
 
         <!-- specify enter and exit transitions -->
-        <item name="android:windowEnterTransition">@android:transition/move</item>
-        <item name="android:windowExitTransition">@android:transition/move</item>
+        <item name="android:windowEnterTransition">@android:transition/explode</item>
+        <item name="android:windowExitTransition">@android:transition/explode</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">

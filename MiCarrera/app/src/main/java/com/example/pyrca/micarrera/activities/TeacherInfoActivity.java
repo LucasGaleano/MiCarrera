@@ -1,8 +1,12 @@
 package com.example.pyrca.micarrera.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +17,7 @@ import com.example.pyrca.micarrera.database.Repository;
 import com.example.pyrca.micarrera.database.Teacher;
 import com.example.pyrca.micarrera.dialog.ChoiceTypeTeacherDialogFragment;
 import com.example.pyrca.micarrera.dialog.EditTeacherDialogFragment;
+import com.example.pyrca.micarrera.view.NavigationMenu;
 
 public class TeacherInfoActivity extends AppCompatActivity {
 
@@ -27,8 +32,8 @@ public class TeacherInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_info);
-
-         int id = getIntent().getIntExtra(SubjectActivity.EXTRA_ID, -1);
+        this.initNavigationAndToolbar();
+        int id = getIntent().getIntExtra(SubjectActivity.EXTRA_ID, -1);
 
         repo = new Repository(getApplication());
         teacher = repo.getTeacherById(id);
@@ -81,6 +86,21 @@ public class TeacherInfoActivity extends AppCompatActivity {
             dialog.show(getSupportFragmentManager(),"Choose");
         }
     };
+
+    private void initNavigationAndToolbar() {
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationMenu Nav = new NavigationMenu(this, drawer);
+        navigationView.setNavigationItemSelectedListener(Nav.getListener());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -2,6 +2,8 @@ package com.example.pyrca.micarrera.activities;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -53,7 +55,6 @@ public class SubjectActivity extends AppCompatActivity {
     private String subjectName;
     private Repository repo;
     private ListaView listaTareas, listaProfesores, listaExamenes;
-    private DrawerLayout drawer;
     public static final String EXTRA_ID = "com.example.pyrca.micarrera.extra.ID";
     public FloatingActionButton fab_action;
     public ImageView foto;
@@ -65,6 +66,7 @@ public class SubjectActivity extends AppCompatActivity {
     public Bitmap d,scaled;
     public List<String> listaFotos;
     public GridView gridView;
+    private SubjectActivity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,7 +223,7 @@ public class SubjectActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);

@@ -4,8 +4,12 @@ import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +21,7 @@ import com.example.pyrca.micarrera.classes.Calendario;
 import com.example.pyrca.micarrera.database.Exam;
 import com.example.pyrca.micarrera.database.Repository;
 import com.example.pyrca.micarrera.dialog.EditExamDialogFragment;
+import com.example.pyrca.micarrera.view.NavigationMenu;
 
 public class ExamInfoActivity extends AppCompatActivity {
 
@@ -30,6 +35,7 @@ public class ExamInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_exam);
+        this.initNavigationAndToolbar();
 
 
         int id = getIntent().getIntExtra(SubjectActivity.EXTRA_ID,-1);
@@ -93,6 +99,22 @@ public class ExamInfoActivity extends AppCompatActivity {
         }
     };
 
+    private void initNavigationAndToolbar() {
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationMenu Nav = new NavigationMenu(this, drawer);
+        navigationView.setNavigationItemSelectedListener(Nav.getListener());
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -117,6 +139,7 @@ public class ExamInfoActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }
 
