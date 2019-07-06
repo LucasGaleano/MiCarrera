@@ -44,7 +44,8 @@
 
         <activity android:name="com.example.pyrca.micarrera.activities.AssignmentInfoActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.pyrca.micarrera.activities.TeacherInfoActivity"/>
+        <activity android:name="com.example.pyrca.micarrera.activities.TeacherInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.example.pyrca.micarrera.activities.ListWorkActivity"
             android:label="@string/title_activity_listwork"
             android:theme="@style/AppTheme.NoActionBar"/>

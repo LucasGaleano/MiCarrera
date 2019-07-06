@@ -14,10 +14,10 @@
 
 
     <color name="colorAccent">#CF5301</color>
-    <color name="colorInhabilitada">#c89e9e9e</color>
-    <color name="colorHabilitada">#c8ff6f00</color>
-    <color name="colorCursando">#c8ffa200</color>
-    <color name="colorCursada">#c8ccff90</color>
-    <color name="colorAprobada">#c876ff03</color>
+    <color name="colorInhabilitada">#C8DDDADA</color>
+    <color name="colorHabilitada">#FAEE7F</color>
+    <color name="colorCursando">#A0C5D6</color>
+    <color name="colorCursada">#8FB366</color>//A3CC75
+    <color name="colorAprobada">#B6E97B</color>
     <color name="Blanco">#ffffffff</color>
 </resources>

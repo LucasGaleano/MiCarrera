@@ -60,7 +60,7 @@ public class SubjectActivity extends AppCompatActivity {
     public ImageView foto;
     public File file;
     public String pictureImagePath = "";
-    public String carpeta = "/storage/emulated/0/Pictures/Ficus/";///storage/emulated/0/Pictures/Ficus/
+    public String carpeta = "/storage/emulated/0/Pictures/Ficus/";
     public Uri outputFileUri;
     private Subject subject;
     public Bitmap d,scaled;

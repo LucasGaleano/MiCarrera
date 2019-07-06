@@ -87,7 +87,7 @@ public class ListaView extends LinearLayout {
 
         add_header_button.setOnClickListener(addClick);
 
-        add_header_button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_add_black_24dp, null));
+        add_header_button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_add_circle_outline_black_24dp, null));
         add_header_button.setBackgroundResource(R.drawable.selectorimagen);
         add_header_button.setLayoutParams(new LinearLayout.LayoutParams(70, 70));
         headerLayout.addView(header);
